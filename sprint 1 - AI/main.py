@@ -31,6 +31,16 @@ def sort(dictionary, str):
             counter += 1
     return temp2
 
+def sort_name():
+    my_json_file = open('./data/steam.json', 'r')
+    jsondata = my_json_file.read()
+    obj = json.loads(jsondata)
+    item = str(obj[0]["name"])
+
+    return item
+
+
+
 inladen()
 sortdev = sort(steam, "developer")
 print(sortdev[1])
