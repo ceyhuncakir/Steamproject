@@ -23,15 +23,12 @@ def sort(dictionary, str, OGK):
             temp[dictionary[item][str]] = [item]
     temp2 = sorted(temp, reverse=OGK)
     temp3 = {}
-    for item in temp2:
-        temp3[item] = temp[item]
-    temp2 = {}
     counter = 0
-    for group in temp3:
-        for item in temp3[group]:
-            temp2[counter] = dictionary[item]
+    for group in temp2:
+        for item in temp[group]:
+            temp3[counter] = dictionary[item]
             counter += 1
-    return temp2
+    return temp3
 
 def sort_name():
     my_json_file = open('./data/steam.json', 'r')
