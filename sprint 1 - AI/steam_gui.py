@@ -1,5 +1,5 @@
 from tkinter import *
-
+from main import *
 # Dit is de 1e prototype ((Work in process/Niet af)).
 # Het gaat meer om de bouw in code volgens de manier van Tinking in tkinter(canvas)
 #
@@ -45,8 +45,8 @@ class FrameOne(Frame):
         master.create_background_logos(self)
         label = Label(self, text="Begin Scherm", bg="blue", borderwidth=5, relief=RIDGE)
         label.pack(pady=10, padx=10)
-        f1_button1 = Button(self, text="Show Naam functie button", command=lambda: self.deze_func_bestaat_niet(), borderwidth=5, relief=RIDGE)
-        f1_button1.bind("<Return>", lambda event: self.deze_func_bestaat_niet())
+        f1_button1 = Button(self, text="Show Naam functie button", command=lambda: self.gui_get_name(), borderwidth=5, relief=RIDGE)
+        f1_button1.bind("<Return>", lambda event: self.gui_get_name())
         f1_button1.pack(pady=10, padx=10)
         self.label1 = Label(self, text="NAAM HIER", borderwidth=5, relief=RIDGE)
         self.label1.pack(pady=10, padx=10)
@@ -57,10 +57,9 @@ class FrameOne(Frame):
         f1_button2.bind("<Return>", lambda event: master.next_frame(FrameTwo))
         f1_button2.pack(pady=10, padx=10,  side=BOTTOM)
 
-
-    def deze_func_bestaat_niet(self):
-        # De functie voor naam moet nog komen in andere script!
-        self.label1["text"] = "TESTING NAAM"
+    def gui_get_name(self):
+        first_game = give_name()
+        self.label1["text"] = first_game
 
 
 class FrameTwo(Frame):
