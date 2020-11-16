@@ -31,7 +31,7 @@ def sort(dictionary, str, OGK):
     return temp3
 
 
-def sort_name():
+def give_name():
     my_json_file = open('./data/steam.json', 'r')
     jsondata = my_json_file.read()
     obj = json.loads(jsondata)
