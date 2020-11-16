@@ -12,14 +12,16 @@ def inladen():
             counter += 1
 
 
-def sort(dictionary, str):
+def sort(dictionary, str, OGK):
+    if OGK == None:
+        OGK = 0
     temp = {}
     for item in dictionary:
         try:
             temp[dictionary[item][str]] = temp[dictionary[item][str]] + [item]
         except:
             temp[dictionary[item][str]] = [item]
-    temp2 = sorted(temp)
+    temp2 = sorted(temp, reverse=OGK)
     temp3 = {}
     for item in temp2:
         temp3[item] = temp[item]
@@ -32,6 +34,6 @@ def sort(dictionary, str):
     return temp2
 
 inladen()
-sortdev = sort(steam, "developer")
-print(sortdev[1])
+sortdev = sort(steam, "positive_ratings", 1)
+print(sortdev)
 print(steam[0])
