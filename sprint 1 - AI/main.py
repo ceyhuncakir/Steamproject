@@ -17,9 +17,9 @@ def sort(dictionary, str, OGK):
         OGK = 0
     temp = {}
     for item in dictionary:
-        try:
+        if temp.get(dictionary[item][str]) != None:
             temp[dictionary[item][str]] = temp[dictionary[item][str]] + [item]
-        except:
+        else:
             temp[dictionary[item][str]] = [item]
     temp2 = sorted(temp, reverse=OGK)
     temp3 = {}
