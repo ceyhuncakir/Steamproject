@@ -1,7 +1,7 @@
 import json
 
 steam = {}
-
+sortstorage = ["appid",0,0]
 
 def inladen():
     with open('./Data/steam.json', 'r') as steamdata:
@@ -24,13 +24,26 @@ def sort(str, OGK):
             temp[steam[item][str]] = [item]
     temp2 = sorted(temp, reverse=OGK)
     temp3 = {}
-    counter = 0
+    count = 0
     for group in temp2:
         for item in temp[group]:
-            temp3[counter] = steam[item]
-            counter += 1
+            temp3[count] = steam[item]
+            count += 1
     steam = temp3
     return steam
+
+def sortnext(searchterm, OGK):
+    global sortstorage
+    if OGK == None:
+        OGK = 0
+    sortstorage[2] += 1
+    if sortstorage[2] == 27064:
+        sortstorage[2] = 0
+    if sortstorage != [searchterm, OGK, sortstorage[2]]:
+        sortstorage = [searchterm, OGK, 0]
+        sort(searchterm, OGK)
+    return str(steam[sortstorage[2]]['name'])
+
 
 counter = 0
 def give_name():
