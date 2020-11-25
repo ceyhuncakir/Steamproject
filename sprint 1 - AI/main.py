@@ -13,6 +13,7 @@ def inladen():
 
 
 def sort(str, OGK):
+    global steam
     if OGK == None:
         OGK = 0
     temp = {}
@@ -28,7 +29,8 @@ def sort(str, OGK):
         for item in temp[group]:
             temp3[counter] = steam[item]
             counter += 1
-    return temp3
+    steam = temp3
+    return steam
 
 
 def give_name():
@@ -42,6 +44,4 @@ def give_name():
 
 
 inladen()
-sortdev = sort("positive_ratings", 1)
-print(sortdev)
-print(steam[0])
+sort("positive_ratings", 1)
