@@ -32,13 +32,14 @@ def sort(str, OGK):
     steam = temp3
     return steam
 
-
+counter = 0
 def give_name():
     my_json_file = open('./data/steam.json', 'r')
     jsondata = my_json_file.read()
     obj = json.loads(jsondata)
-    item = str(obj[0]["name"])
-
+    global counter
+    item = str(obj[counter]["name"])
+    counter += 1
     return item
 
 
