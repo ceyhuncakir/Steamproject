@@ -12,21 +12,21 @@ def inladen():
             counter += 1
 
 
-def sort(dictionary, str, OGK):
+def sort(str, OGK):
     if OGK == None:
         OGK = 0
     temp = {}
-    for item in dictionary:
-        if temp.get(dictionary[item][str]) != None:
-            temp[dictionary[item][str]] = temp[dictionary[item][str]] + [item]
+    for item in steam:
+        if temp.get(steam[item][str]) != None:
+            temp[steam[item][str]] = temp[steam[item][str]] + [item]
         else:
-            temp[dictionary[item][str]] = [item]
+            temp[steam[item][str]] = [item]
     temp2 = sorted(temp, reverse=OGK)
     temp3 = {}
     counter = 0
     for group in temp2:
         for item in temp[group]:
-            temp3[counter] = dictionary[item]
+            temp3[counter] = steam[item]
             counter += 1
     return temp3
 
@@ -42,6 +42,6 @@ def give_name():
 
 
 inladen()
-sortdev = sort(steam, "positive_ratings", 1)
+sortdev = sort("positive_ratings", 1)
 print(sortdev)
 print(steam[0])
