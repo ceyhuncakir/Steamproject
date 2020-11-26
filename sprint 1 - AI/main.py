@@ -53,6 +53,11 @@ def give_name():
     global counter
     item = str(obj[counter]["name"])
     counter += 1
+    if counter > 27.063:
+        counter = 0
+    #if counter > len(obj):
+    #    counter = 0
+
     return item
 
 
