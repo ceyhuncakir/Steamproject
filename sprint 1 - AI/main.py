@@ -32,6 +32,7 @@ def sort(str, OGK):
     steam = temp3
     return steam
 
+
 def sortnext(searchterm, OGK):
     global sortstorage
     if OGK == None:
@@ -55,12 +56,27 @@ def give_name():
     counter += 1
     if counter > 27063:
         counter = 0
-    #if counter > len(obj):
+
+    # De functie hier onder aangepast met min 1, nu is die het zelfde als die hier boven maar flexibel! Yes/No?
+    #if counter > (len(obj) - 1):
     #    counter = 0
 
     return item
 
 
-
 inladen()
-sort("positive_ratings", 1)
+
+# print('niet', steam[0])
+# print('niet', steam[1])
+# sort('release_date', 1)
+# print(steam[0]['release_date'])
+# print(steam[1]['release_date'])
+# print(steam[2]['release_date'])
+# print(steam[3]['release_date'])
+# sort("negative_ratings", 1)
+# print(steam[0]["negative_ratings"])
+# print(steam[1]["negative_ratings"])
+# print(steam[2]["negative_ratings"])
+# print(steam[3]["negative_ratings"])
+#
+# print("hier", sortnext("negative_ratings", 0))

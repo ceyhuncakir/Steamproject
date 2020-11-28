@@ -23,7 +23,7 @@ class SteamGui:
         self.frame_holder.grid_rowconfigure(0, weight=1)
         self.frame_holder.grid_columnconfigure(0, weight=1)
         self.all_frames = {}
-        for frame in (FrameOne, FrameTwo):
+        for frame in (FrameOne, FrameTwo, FrameThree):
             this_frame = frame(self.frame_holder, self)
             self.all_frames[frame] = this_frame
             this_frame.grid(row=0, column=0, sticky="nsew")
@@ -47,38 +47,62 @@ class FrameOne(Frame):
     def __init__(self, parrent, master):
         Frame.__init__(self, parrent)
         master.create_background_logos(self)
-        # label = Label(self, text="Begin Scherm", bg="blue", borderwidth=5, relief=RIDGE)
-        # label.pack(pady=10, padx=10)
+        label = Label(self, text="Main Menu", bg="#99A3A4", borderwidth=5, relief=RIDGE, font=master.font_type)
+        label.pack(pady=80, padx=10)
         f1_button3 = Button(self, text="Exit", bg="#99A3A4", command=lambda: master.exit(), borderwidth=5, relief=RIDGE,
                             font=master.font_type, activebackground='#99A3A4')
         f1_button3.bind("<Return>", lambda event: master.exit())
         f1_button3.pack(pady=10, padx=10, side=BOTTOM)
-        f1_button2 = Button(self, text="Next", bg="#99A3A4", command=lambda: master.next_frame(FrameTwo), borderwidth=5,
+        f1_button2 = Button(self, text="Show game names", bg="#99A3A4", command=lambda: master.next_frame(FrameTwo), borderwidth=5,
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
         f1_button2.bind("<Return>", lambda event: master.next_frame(FrameTwo))
-        f1_button2.pack(pady=2, padx=5, anchor=CENTER, expand=YES)
+        f1_button2.pack(pady=5, padx=5)
+        f1_button3 = Button(self, text="Sorteer games", bg="#99A3A4", command=lambda: master.next_frame(FrameThree), borderwidth=5,
+                            relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
+        f1_button3.bind("<Return>", lambda event: master.next_frame(FrameThree))
+        f1_button3.pack(pady=5, padx=5)
 
 
 class FrameTwo(Frame):
     def __init__(self, parrent, master):
         Frame.__init__(self, parrent)
         master.create_background_logos(self)
-        # label = Label(self, text="FrameTwo", bg="blue", borderwidth=5, relief=RIDGE)
-        # label.pack(pady=10, padx=10)
-        f2_button2 = Button(self, text="Show first game name", bg="#99A3A4", command=lambda: self.gui_get_name(),
-                            borderwidth=5, relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
-        f2_button2.bind("<Return>", lambda event: self.gui_get_name())
-        f2_button2.pack(pady=10, padx=10)
+        label = Label(self, text="Game name", bg="#99A3A4", borderwidth=5, relief=RIDGE, font=master.font_type)
+        label.pack(pady=80, padx=10)
         self.label1 = Label(self, text="      ", bg="#99A3A4", borderwidth=5, relief=RIDGE, font=master.font_type)
         self.label1.pack(pady=10, padx=10)
-        f2_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: master.next_frame(FrameOne), borderwidth=5,
+        self.f2_button2 = Button(self, text="Show game", bg="#99A3A4", command=lambda: self.gui_get_name(),
+                            borderwidth=5, relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
+        self.f2_button2.bind("<Return>", lambda event: self.gui_get_name())
+        self.f2_button2.pack(pady=10, padx=10)
+        f2_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: [master.next_frame(FrameOne), self.gui_clean_name()], borderwidth=5,
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
-        f2_button1.bind("<Return>", lambda event: master.next_frame(FrameOne))
+        f2_button1.bind("<Return>", lambda event: [master.next_frame(FrameOne), self.gui_clean_name()])
         f2_button1.pack(pady=10, padx=10, side=BOTTOM)
+
 
     def gui_get_name(self):
         first_game = give_name()
         self.label1["text"] = first_game
+        self.f2_button2.config(text="Next game")
+
+
+    def gui_clean_name(self):
+        self.label1["text"] = "      "
+        self.f2_button2.config(text="Show game")
+
+
+class FrameThree(Frame):
+    def __init__(self, parrent, master):
+        Frame.__init__(self, parrent)
+        master.create_background_logos(self)
+        label = Label(self, text="Sorting games", bg="#99A3A4", borderwidth=5, relief=RIDGE, font=master.font_type)
+        label.pack(pady=80, padx=10)
+        f3_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: master.next_frame(FrameOne), borderwidth=5,
+                            relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
+        f3_button1.bind("<Return>", lambda event: master.next_frame(FrameOne))
+        f3_button1.pack(pady=10, padx=10, side=BOTTOM)
+
 
 
 def resize_image(item, n_width, n_height, num):
