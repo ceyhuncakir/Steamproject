@@ -63,20 +63,3 @@ def give_name():
 
     return item
 
-
-inladen()
-
-# print('niet', steam[0])
-# print('niet', steam[1])
-# sort('release_date', 1)
-# print(steam[0]['release_date'])
-# print(steam[1]['release_date'])
-# print(steam[2]['release_date'])
-# print(steam[3]['release_date'])
-# sort("negative_ratings", 1)
-# print(steam[0]["negative_ratings"])
-# print(steam[1]["negative_ratings"])
-# print(steam[2]["negative_ratings"])
-# print(steam[3]["negative_ratings"])
-#
-# print("hier", sortnext("negative_ratings", 0))

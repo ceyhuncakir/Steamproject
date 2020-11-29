@@ -4,7 +4,7 @@ from PIL import Image, ImageTk
 import tkinter.font as font
 
 
-# Dit is de 2e prototype (Work in process).
+# Dit is de 3e prototype (Work in process).
 # Feedback of ideen zijn altijd welkome!
 
 image_list = {1: 'background_steam.png', 2: 'background.png', 3: 'consulting_logo.png'}
@@ -22,6 +22,9 @@ class SteamGui:
         self.frame_holder.pack(fill=BOTH, expand=YES)
         self.frame_holder.grid_rowconfigure(0, weight=1)
         self.frame_holder.grid_columnconfigure(0, weight=1)
+        self.catagorie_list = []
+        for categorie in steam[0]:
+            self.catagorie_list.append(categorie)
         self.all_frames = {}
         for frame in (FrameOne, FrameTwo, FrameThree):
             this_frame = frame(self.frame_holder, self)
@@ -96,13 +99,46 @@ class FrameThree(Frame):
     def __init__(self, parrent, master):
         Frame.__init__(self, parrent)
         master.create_background_logos(self)
+        self.sorted_list = {}
         label = Label(self, text="Sorting games", bg="#99A3A4", borderwidth=5, relief=RIDGE, font=master.font_type)
-        label.pack(pady=80, padx=10)
+        label.pack(pady=20, padx=10, side=TOP)
+        self.f3_Spinbox = Spinbox(self, values=master.catagorie_list, font=master.font_type)
+        self.f3_Spinbox.pack(pady=4, padx=4, side=TOP)
+        f3_button2 = Button(self, text="Sort", bg="#99A3A4", borderwidth=5, command=lambda: self.gui_sort(),
+                            relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
+        f3_button2.bind("<Return>", lambda event: master.next_frame(FrameOne))
+        f3_button2.pack(pady=4, padx=4, side=TOP)
+        # f3_button3 = Button(self, text="Next", bg="#99A3A4", borderwidth=5,
+        #                     relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
+        # f3_button3.bind("<Return>", lambda event: master.next_frame(FrameOne))
+        # f3_button3.pack(pady=4, padx=4, side=TOP)
+        self.f3_textbox = Text(self)
+        self.f3_textbox.pack(pady=4, padx=4, side=TOP, fill=Y, expand=YES)
         f3_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: master.next_frame(FrameOne), borderwidth=5,
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
         f3_button1.bind("<Return>", lambda event: master.next_frame(FrameOne))
-        f3_button1.pack(pady=10, padx=10, side=BOTTOM)
+        f3_button1.pack(pady=4, padx=4, side=BOTTOM)
 
+
+    def gui_sort(self):
+        search = self.f3_Spinbox.get()
+        self.sorted_list = sort(search, 1)
+        inserting = ''
+        num = 0
+        for key, item in self.sorted_list.items():
+            a = str(num) + ": "
+            b = item['name']
+            c = item['developer']
+            inserting += str(a) + 'Name: ' + str(b) + "  " + str(search) + ": " + str(item[search]) + '\n'
+            num += 1
+        self.gui_insert_text(inserting)
+
+
+    def gui_insert_text(self, item):
+        self.f3_textbox.config(state=NORMAL)
+        self.f3_textbox.delete('1.0', END)
+        self.f3_textbox.insert(END, item)
+        self.f3_textbox.config(state=DISABLED)
 
 
 def resize_image(item, n_width, n_height, num):
@@ -118,9 +154,10 @@ def resize_image_size(width, height):
     resize_image(image_list[3], int(width * 0.104166667), int(height * 0.06944444), 3)
 
 
+inladen()
 root = Tk()
-width = int(root.winfo_screenwidth() / 2)
-height = int(root.winfo_screenheight() / 1.2)
+width = int(root.winfo_screenwidth() / 1.8)
+height = int(root.winfo_screenheight() / 1.1)
 resize_image_size(width, height)
 steam_gui = SteamGui(root)
 root.mainloop()
