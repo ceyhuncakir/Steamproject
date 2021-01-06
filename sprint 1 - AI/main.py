@@ -1,6 +1,6 @@
 import json
 
-
+# (het werkt nog niet met de Gui)
 steam2 = []
 steam_cath = []
 def inladen2():
@@ -25,6 +25,32 @@ def inladen2():
     print(steam_cath)
     print(steam2[0])
 inladen2()
+
+# inplaats van de sorted function (het werkt nog niet met de Gui)
+def basic_sort(str):
+    sort_on = steam_cath[0].index(str)
+    # Hier moet iets komen om te bepalen of op nummer of string of date gesorteerd gaat worden
+    # hier onder een insertion sort voor getallen.
+    sorted_steam = steam2.copy()
+    for index in range(0, (len(sorted_steam) - 1)):
+        second_value = int(sorted_steam[index+1][sort_on])
+        index_grens = index
+        # GEEN IDee Waarom die hier vast loopt <----------------------------------------------------
+        test_debug = int(sorted_steam[index][0])
+        print(second_value, int(sorted_steam[index][0]), index_grens)
+        # De test_debug is voor die hier onder anders loopt die daar vast
+        while second_value < sorted_steam[index][sort_on] and index_grens >= 0:
+            sorted_steam[index+1] = sorted_steam[index]
+            index_grens -= 1
+        sorted_steam[index + 1] = second_value
+    # return sorted_steam
+    print(steam[0][0], 'basic_sort')
+    print(steam[1][0], 'basic_sort')
+    print(steam[2][0], 'basic_sort')
+
+basic_sort('appid')
+
+
 
 steam = {}
 def inladen():
