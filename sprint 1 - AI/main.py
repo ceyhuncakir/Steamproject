@@ -1,8 +1,32 @@
 import json
 
-steam = {}
-sortstorage = ["appid",0,0]
 
+steam2 = []
+steam_cath = []
+def inladen2():
+    with open('./Data/steam.json', 'r') as steamdata:
+        data = json.load(steamdata)
+        # Categorien worden apart opgeslagen
+        temp = []
+        for cath in data[0].keys():
+            temp.append(cath)
+        steam_cath.append(tuple(temp))
+        # Categorien word gescheiden van de data voorkomt nuttelose data, (zou anders ook geen logies indeling weten)
+        load_counter = 0
+        for item in data:
+            temp_tuple = ()
+            for value_item in item.values():
+                tem = (value_item,)
+                temp_tuple = temp_tuple + tem
+            steam2.append(temp_tuple)
+            load_counter += 1
+    # Hier onder voorbeeld van uitkomst de steam_cath zall worden gebruikt door de gui
+    # en steam is alle data van elke game in een lijst met tuples
+    print(steam_cath)
+    print(steam2[0])
+inladen2()
+
+steam = {}
 def inladen():
     with open('./Data/steam.json', 'r') as steamdata:
         data = json.load(steamdata)
@@ -13,7 +37,6 @@ def inladen():
 
 
 def sort(str, OGK):
-    global steam
     if OGK == None:
         OGK = 0
     temp = {}
@@ -29,21 +52,22 @@ def sort(str, OGK):
         for item in temp[group]:
             temp3[count] = steam[item]
             count += 1
-    steam = temp3
     return steam
 
 
-def sortnext(searchterm, OGK):
-    global sortstorage
-    if OGK == None:
-        OGK = 0
-    sortstorage[2] += 1
-    if sortstorage[2] == 27064:
-        sortstorage[2] = 0
-    if sortstorage != [searchterm, OGK, sortstorage[2]]:
-        sortstorage = [searchterm, OGK, 0]
-        sort(searchterm, OGK)
-    return str(steam[sortstorage[2]]['name'])
+#  Deze gaan we niet gebruiken (Klopt niet met opdrachten canvas)
+# sortstorage = ["appid",0,0]
+# def sortnext(searchterm, OGK):
+#     global sortstorage
+#     if OGK == None:
+#         OGK = 0
+#     sortstorage[2] += 1
+#     if sortstorage[2] == 27064:
+#         sortstorage[2] = 0
+#     if sortstorage != [searchterm, OGK, sortstorage[2]]:
+#         sortstorage = [searchterm, OGK, 0]
+#         sort(searchterm, OGK)
+#     return str(steam[sortstorage[2]]['name'])
 
 
 counter = 0
@@ -54,12 +78,7 @@ def give_name():
     global counter
     item = str(obj[counter]["name"])
     counter += 1
-    if counter > 27063:
+    if counter > (len(obj) - 1):
         counter = 0
-
-    # De functie hier onder aangepast met min 1, nu is die het zelfde als die hier boven maar flexibel! Yes/No?
-    #if counter > (len(obj) - 1):
-    #    counter = 0
-
     return item
 
