@@ -33,10 +33,9 @@ def basic_sort(str):
     # hier onder een insertion sort voor getallen.
     sorted_steam = steam2.copy()
     for index in range(0, (len(sorted_steam) - 1)):
-        second_value = int(sorted_steam[index+1][sort_on])
         copy_list = sorted_steam[index + 1]
         index_grens = index
-        while second_value < sorted_steam[index][sort_on] and index_grens >= 0:
+        while sorted_steam[index + 1][sort_on] < sorted_steam[index][sort_on] and index_grens >= 0:
             sorted_steam[index+1] = sorted_steam[index]
             index_grens -= 1
             sorted_steam[index] = copy_list
