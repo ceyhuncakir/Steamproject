@@ -34,19 +34,16 @@ def basic_sort(str):
     sorted_steam = steam2.copy()
     for index in range(0, (len(sorted_steam) - 1)):
         second_value = int(sorted_steam[index+1][sort_on])
+        copy_list = sorted_steam[index + 1]
         index_grens = index
-        # GEEN IDee Waarom die hier vast loopt <----------------------------------------------------
-        test_debug = int(sorted_steam[index][0])
-        print(second_value, int(sorted_steam[index][0]), index_grens)
-        # De test_debug is voor die hier onder anders loopt die daar vast
         while second_value < sorted_steam[index][sort_on] and index_grens >= 0:
             sorted_steam[index+1] = sorted_steam[index]
             index_grens -= 1
-        sorted_steam[index + 1] = second_value
+            sorted_steam[index] = copy_list
     # return sorted_steam
-    print(steam[0][0], 'basic_sort')
-    print(steam[1][0], 'basic_sort')
-    print(steam[2][0], 'basic_sort')
+    print(sorted_steam[0][0], 'basic_sort')
+    print(sorted_steam[1][0], 'basic_sort')
+    print(sorted_steam[2][0], 'basic_sort')
 
 basic_sort('appid')
 
