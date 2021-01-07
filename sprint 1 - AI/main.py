@@ -27,24 +27,40 @@ def inladen2():
 inladen2()
 
 # inplaats van de sorted function (het werkt nog niet met de Gui)
+
+
+
 def basic_sort(str):
     sort_on = steam_cath[0].index(str)
     # Hier moet iets komen om te bepalen of op nummer of string of date gesorteerd gaat worden
     # hier onder een insertion sort voor getallen.
     sorted_steam = steam2.copy()
-    for index in range(0, (len(sorted_steam) - 1)):
-        copy_list = sorted_steam[index + 1]
+    for index in range(1, (len(sorted_steam))):
+        copy_list = sorted_steam[index]
         index_grens = index
-        while sorted_steam[index + 1][sort_on] < sorted_steam[index][sort_on] and index_grens >= 0:
-            sorted_steam[index+1] = sorted_steam[index]
+        print('something', index, len(sorted_steam)) # Hij doet het maar het duurt voor eeuwig als er veel verandert.
+        while sorted_steam[index_grens][sort_on] < sorted_steam[index_grens - 1][sort_on] and index_grens > 0:
+            sorted_steam[index_grens] = sorted_steam[index_grens - 1]
+            sorted_steam[index_grens - 1] = copy_list
             index_grens -= 1
-            sorted_steam[index] = copy_list
     # return sorted_steam
+    print(type(sorted_steam[0][2]))
+    print(sorted_steam[0][1], 'basic_sort')
     print(sorted_steam[0][0], 'basic_sort')
+    print(sorted_steam[1][1], 'basic_sort')
     print(sorted_steam[1][0], 'basic_sort')
+    print(sorted_steam[2][1], 'basic_sort')
     print(sorted_steam[2][0], 'basic_sort')
+    print(sorted_steam[3][1], 'basic_sort')
+    print(sorted_steam[3][0], 'basic_sort')
+    print(sorted_steam[4][1], 'basic_sort')
+    print(sorted_steam[4][0], 'basic_sort')
 
+# Als er niets verandert hoeft te worden 3 seconden
 basic_sort('appid')
+# Als er veel moet veranderen duurt het voor eeuwig (betere simple sort zoeken??)
+# basic_sort('price')
+# basic_sort('name')
 
 
 
