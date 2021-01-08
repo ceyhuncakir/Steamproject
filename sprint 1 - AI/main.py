@@ -1,6 +1,9 @@
 import json
 
-# (het werkt nog niet met de Gui)
+# Het werkt nog niet met de Gui
+# Er is of iets fout met hoe de data structuur nu wordt ingeladen of de basic sort moet anders
+# Voor bijvoorbeeld het uit rekenen van het mediaan of variantie die een gesorteerde lijst nodig heeft duur het eeuwig.
+# "Niet haalbaar voor een 6 minuten filmpje"
 steam2 = []
 steam_cath = []
 def inladen2():
@@ -20,20 +23,18 @@ def inladen2():
                 temp_tuple = temp_tuple + tem
             steam2.append(temp_tuple)
             load_counter += 1
-    # Hier onder voorbeeld van uitkomst de steam_cath zall worden gebruikt door de gui
-    # en steam is alle data van elke game in een lijst met tuples
+    # Hier onder voorbeeld van uitkomst de steam_cath die zal worden gebruikt door de gui
+    # en steam2 is alle data van elke game in een lijst met tuples
     print(steam_cath)
+    # steam_cath = [('appid', 'name', 'release_date', ... )]
     print(steam2[0])
+    # steam2 =  [(10, 'Counter-Strike', '2000-11-01', ... ), (20, 'Team Fortress Classic', '1999-04-01',... ), ...]
 inladen2()
 
 # inplaats van de sorted function (het werkt nog niet met de Gui)
-
-
-
 def basic_sort(str):
     sort_on = steam_cath[0].index(str)
-    # Hier moet iets komen om te bepalen of op nummer of string of date gesorteerd gaat worden
-    # hier onder een insertion sort voor getallen.
+    # hier onder een insertion sort.
     sorted_steam = steam2.copy()
     for index in range(1, (len(sorted_steam))):
         copy_list = sorted_steam[index]
@@ -43,7 +44,7 @@ def basic_sort(str):
             sorted_steam[index_grens] = sorted_steam[index_grens - 1]
             sorted_steam[index_grens - 1] = copy_list
             index_grens -= 1
-    # return sorted_steam
+    return sorted_steam
     print(type(sorted_steam[0][2]))
     print(sorted_steam[0][1], 'basic_sort')
     print(sorted_steam[0][0], 'basic_sort')
@@ -57,40 +58,67 @@ def basic_sort(str):
     print(sorted_steam[4][0], 'basic_sort')
 
 # Als er niets verandert hoeft te worden 3 seconden
-basic_sort('appid')
-# Als er veel moet veranderen duurt het voor eeuwig (betere simple sort zoeken??)
+# basic_sort('appid')
+# Als er veel moet veranderen duurt het voor eeuwig (betere simple sort zoeken? of ligt het aan de indeling data)
 # basic_sort('price')
 # basic_sort('name')
+# basic_sort('positive_ratings')
+
+def gemidelde(index_location):
+    list_gemiddelde = steam2.copy()
+    amount = 0
+    for index in range(0, (len(list_gemiddelde)) - 1):
+        amount += list_gemiddelde[index][index_location]
+    print(amount)
+    gemidelde = amount / len(list_gemiddelde)
+    print(int(gemidelde), "gemiddelt aantal", steam_cath[0][index_location])
 
 
+gemidelde(12)
+gemidelde(17)
 
-steam = {}
-def inladen():
-    with open('./Data/steam.json', 'r') as steamdata:
-        data = json.load(steamdata)
-        counter = 0
-        for item in data:
-            steam.update({counter: item})  # data[counter] verandert naar item. het doet de zelfde handeling.
-            counter += 1
+def rnge(index_location):
+    rnge_list = steam2.copy()
+    higest = rnge_list[0][index_location]
+    lowest = rnge_list[0][index_location]
+    for index in range(0, (len(rnge_list)) - 1):
+        if higest < rnge_list[index][index_location]:
+            higest = rnge_list[index][index_location]
+        if lowest > rnge_list[index][index_location]:
+            lowest = rnge_list[index][index_location]
+    range_uitkomst = higest - lowest
+    print(int(range_uitkomst), "range van", steam_cath[0][index_location])
+
+rnge(17)
 
 
-def sort(str, OGK):
-    if OGK == None:
-        OGK = 0
-    temp = {}
-    for item in steam:
-        if temp.get(steam[item][str]) != None:
-            temp[steam[item][str]] = temp[steam[item][str]] + [item]
-        else:
-            temp[steam[item][str]] = [item]
-    temp2 = sorted(temp, reverse=OGK)
-    temp3 = {}
-    count = 0
-    for group in temp2:
-        for item in temp[group]:
-            temp3[count] = steam[item]
-            count += 1
-    return steam
+# steam = {}
+# def inladen():
+#     with open('./Data/steam.json', 'r') as steamdata:
+#         data = json.load(steamdata)
+#         counter = 0
+#         for item in data:
+#             steam.update({counter: item})  # data[counter] verandert naar item. het doet de zelfde handeling.
+#             counter += 1
+
+
+# def sort(str, OGK):
+#     if OGK == None:
+#         OGK = 0
+#     temp = {}
+#     for item in steam:
+#         if temp.get(steam[item][str]) != None:
+#             temp[steam[item][str]] = temp[steam[item][str]] + [item]
+#         else:
+#             temp[steam[item][str]] = [item]
+#     temp2 = sorted(temp, reverse=OGK)
+#     temp3 = {}
+#     count = 0
+#     for group in temp2:
+#         for item in temp[group]:
+#             temp3[count] = steam[item]
+#             count += 1
+#     return steam
 
 
 #  Deze gaan we niet gebruiken (Klopt niet met opdrachten canvas)
