@@ -45,17 +45,6 @@ def basic_sort(str):
             sorted_steam[index_grens - 1] = copy_list
             index_grens -= 1
     return sorted_steam
-    print(type(sorted_steam[0][2]))
-    print(sorted_steam[0][1], 'basic_sort')
-    print(sorted_steam[0][0], 'basic_sort')
-    print(sorted_steam[1][1], 'basic_sort')
-    print(sorted_steam[1][0], 'basic_sort')
-    print(sorted_steam[2][1], 'basic_sort')
-    print(sorted_steam[2][0], 'basic_sort')
-    print(sorted_steam[3][1], 'basic_sort')
-    print(sorted_steam[3][0], 'basic_sort')
-    print(sorted_steam[4][1], 'basic_sort')
-    print(sorted_steam[4][0], 'basic_sort')
 
 # Als er niets verandert hoeft te worden 3 seconden
 # basic_sort('appid')
@@ -69,13 +58,14 @@ def gemidelde(index_location):
     amount = 0
     for index in range(0, (len(list_gemiddelde)) - 1):
         amount += list_gemiddelde[index][index_location]
-    print(amount)
     gemidelde = amount / len(list_gemiddelde)
     print(int(gemidelde), "gemiddelt aantal", steam_cath[0][index_location])
+    return gemidelde
 
 
 gemidelde(12)
 gemidelde(17)
+
 
 def rnge(index_location):
     rnge_list = steam2.copy()
@@ -88,53 +78,68 @@ def rnge(index_location):
             lowest = rnge_list[index][index_location]
     range_uitkomst = higest - lowest
     print(int(range_uitkomst), "range van", steam_cath[0][index_location])
+    return range_uitkomst
+
 
 rnge(17)
 
 
-# steam = {}
-# def inladen():
-#     with open('./Data/steam.json', 'r') as steamdata:
-#         data = json.load(steamdata)
-#         counter = 0
-#         for item in data:
-#             steam.update({counter: item})  # data[counter] verandert naar item. het doet de zelfde handeling.
-#             counter += 1
+def median(index_location):
+    sort_list = basic_sort(steam_cath[0][index_location])
+    lenght_list = len(sort_list)
+    midden_punt = lenght_list//2
+    if lenght_list % 2 == 0:
+        mediaan = ((sort_list[midden_punt][index_location] + sort_list[midden_punt-1][index_location]) / 2)
+    else:
+        mediaan = sort_list[midden_punt][index_location]
+    print(mediaan, "median van", steam_cath[0][index_location])
+# median(17)
 
 
-# def sort(str, OGK):
-#     if OGK == None:
-#         OGK = 0
-#     temp = {}
-#     for item in steam:
-#         if temp.get(steam[item][str]) != None:
-#             temp[steam[item][str]] = temp[steam[item][str]] + [item]
-#         else:
-#             temp[steam[item][str]] = [item]
-#     temp2 = sorted(temp, reverse=OGK)
-#     temp3 = {}
-#     count = 0
-#     for group in temp2:
-#         for item in temp[group]:
-#             temp3[count] = steam[item]
-#             count += 1
-#     return steam
+def variantie(index_location):
+    var_gemidelde = gemidelde(index_location)
+    resultaat = 0
+    for item in steam2:
+        afwijking = item[index_location] - var_gemidelde
+        resultaat += afwijking * afwijking
+    var = resultaat / len(steam2)
+    print(int(var), "variantie van", steam_cath[0][index_location])
+    return var
 
 
-#  Deze gaan we niet gebruiken (Klopt niet met opdrachten canvas)
-# sortstorage = ["appid",0,0]
-# def sortnext(searchterm, OGK):
-#     global sortstorage
-#     if OGK == None:
-#         OGK = 0
-#     sortstorage[2] += 1
-#     if sortstorage[2] == 27064:
-#         sortstorage[2] = 0
-#     if sortstorage != [searchterm, OGK, sortstorage[2]]:
-#         sortstorage = [searchterm, OGK, 0]
-#         sort(searchterm, OGK)
-#     return str(steam[sortstorage[2]]['name'])
+variantie(17)
 
+def standaard_def(index_location):
+    var_list = variantie(index_location)
+    antwoord = var_list**(1/2)
+    print(int(antwoord), "standaarddeviatie van", steam_cath[0][index_location])
+
+
+standaard_def(17)
+
+def interkwartiel_sub(list_num):
+    lenghte_list = len(list_num)
+    midden_punt = lenghte_list // 2
+    if lenghte_list % 2 == 0:
+        mediaan = ((list_num[midden_punt] + list_num[midden_punt-1]) / 2)
+    else:
+        mediaan = list_num[midden_punt]
+    return mediaan
+
+
+def interkwatiel(index_location):
+    sort_list = basic_sort(steam_cath[0][index_location])
+    lenghte_list = len(sort_list)
+    midden_punt = lenghte_list // 2
+    q1 = interkwartiel_sub(sort_list[:midden_punt])
+    if len(sort_list) % 2 == 0:
+        q3 = interkwartiel_sub(sort_list[midden_punt:])
+    else:
+        q3 = interkwartiel_sub(sort_list[midden_punt + 1:])
+    ikr = q3 - q1
+    print(int(ikr), "interkwatiel van", steam_cath[0][index_location])
+# interkwatiel is nog niet af
+# interkwatiel(17)
 
 counter = 0
 def give_name():
