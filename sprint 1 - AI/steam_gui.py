@@ -23,7 +23,7 @@ class SteamGui:
         self.frame_holder.grid_rowconfigure(0, weight=1)
         self.frame_holder.grid_columnconfigure(0, weight=1)
         self.catagorie_list = []
-        for categorie in steam[0]:
+        for categorie in Startup.steam_cath[0]:
             self.catagorie_list.append(categorie)
         self.all_frames = {}
         for frame in (FrameOne, FrameTwo, FrameThree):
@@ -85,7 +85,7 @@ class FrameTwo(Frame):
 
 
     def gui_get_name(self):
-        first_game = give_name()
+        first_game = Startup.give_name()
         self.label1["text"] = first_game
         self.f2_button2.config(text="Next game")
 
@@ -108,10 +108,6 @@ class FrameThree(Frame):
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
         f3_button2.bind("<Return>", lambda event: master.next_frame(FrameOne))
         f3_button2.pack(pady=4, padx=4, side=TOP)
-        # f3_button3 = Button(self, text="Next", bg="#99A3A4", borderwidth=5,
-        #                     relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
-        # f3_button3.bind("<Return>", lambda event: master.next_frame(FrameOne))
-        # f3_button3.pack(pady=4, padx=4, side=TOP)
         self.f3_textbox = Text(self)
         self.f3_textbox.pack(pady=4, padx=4, side=TOP, fill=Y, expand=YES)
         f3_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: master.next_frame(FrameOne), borderwidth=5,
@@ -122,16 +118,16 @@ class FrameThree(Frame):
 
     def gui_sort(self):
         search = self.f3_Spinbox.get()
-        self.sorted_list = sort(search, 1)
-        inserting = ''
-        num = 0
-        for key, item in self.sorted_list.items():
-            a = str(num) + ": "
-            b = item['name']
-            c = item['developer']
-            inserting += str(a) + 'Name: ' + str(b) + "  " + str(search) + ": " + str(item[search]) + '\n'
-            num += 1
-        self.gui_insert_text(inserting)
+        self.sorted_list = sort_func.basic_sort(search)
+        # Waarom wacht die niet tot die het terug krijgt ???
+        # steam2 =  [(10, 'Counter-Strike', '2000-11-01', ... ), (20, 'Team Fortress Classic', '1999-04-01',... ), ...]
+        insert_text = "Sorting on " + str(search) + '\n'
+        for index in range(0, len(self.sorted_list)):
+            num = index + 1
+            game_name = self.sorted_list[index][1]
+            date = self.sorted_list[index][2]
+            insert_text += str(num) + ' Game: ' + str(game_name) + ' Release date: ' + str(date) + '\n'
+        self.gui_insert_text(insert_text)
 
 
     def gui_insert_text(self, item):
@@ -154,7 +150,6 @@ def resize_image_size(width, height):
     resize_image(image_list[3], int(width * 0.104166667), int(height * 0.06944444), 3)
 
 
-inladen()
 root = Tk()
 width = int(root.winfo_screenwidth() / 1.8)
 height = int(root.winfo_screenheight() / 1.1)

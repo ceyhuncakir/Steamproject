@@ -150,12 +150,12 @@ sort_func = SortingAlgorithms(Startup.steam2, Startup.steam_cath)
 calc_statistiek = Statistiek(Startup.steam2, Startup.steam_cath)
 
 # Testing uikomst
-calc_statistiek.gemiddelde(calc_statistiek.get_relevante_data(calc_statistiek.steam2, 17))
-calc_statistiek.rnge(calc_statistiek.get_relevante_data(calc_statistiek.steam2, 17))
-calc_statistiek.median(calc_statistiek.get_relevante_data(sort_func.basic_sort('price'), 17))
-calc_statistiek.variantie(calc_statistiek.get_relevante_data(calc_statistiek.steam2, 17))
-calc_statistiek.standaard_def(calc_statistiek.get_relevante_data(calc_statistiek.steam2, 17))
-calc_statistiek.kwartiel_gen(calc_statistiek.get_relevante_data(sort_func.basic_sort('price'), 17))
+# calc_statistiek.gemiddelde(calc_statistiek.get_relevante_data(calc_statistiek.steam2, 17))
+# calc_statistiek.rnge(calc_statistiek.get_relevante_data(calc_statistiek.steam2, 17))
+# calc_statistiek.median(calc_statistiek.get_relevante_data(sort_func.basic_sort('price'), 17))
+# calc_statistiek.variantie(calc_statistiek.get_relevante_data(calc_statistiek.steam2, 17))
+# calc_statistiek.standaard_def(calc_statistiek.get_relevante_data(calc_statistiek.steam2, 17))
+# calc_statistiek.kwartiel_gen(calc_statistiek.get_relevante_data(sort_func.basic_sort('price'), 17))
 
 
 # Hier Onder Tijdelijke backup oude functies tot bevestiging van joost over vraag
