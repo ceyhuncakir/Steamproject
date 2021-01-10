@@ -5,6 +5,7 @@ class StartupApiTi:
     def __init__(self):
         self.steam2 = []
         self.steam_cath = []
+        self.counter = 0
 
     def inladen(self):
         with open('./Data/steam.json', 'r') as steamdata:
@@ -31,16 +32,14 @@ class StartupApiTi:
         # steam2 =  [(10, 'Counter-Strike', '2000-11-01', ... ), (20, 'Team Fortress Classic', '1999-04-01',... ), ...]
 
     # Geen idee in welke classe name func
-    counter = 0
     def give_name(self):
         my_json_file = open('./data/steam.json', 'r')
         jsondata = my_json_file.read()
         obj = json.loads(jsondata)
-        global counter
-        item = str(obj[counter]["name"])
-        counter += 1
-        if counter > (len(obj) - 1):
-            counter = 0
+        item = str(obj[self.counter]["name"])
+        self.counter += 1
+        if self.counter > (len(obj) - 1):
+            self.counter = 0
         return item
 
 

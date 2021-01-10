@@ -26,7 +26,7 @@ class SteamGui:
         for categorie in Startup.steam_cath[0]:
             self.catagorie_list.append(categorie)
         self.all_frames = {}
-        for frame in (FrameOne, FrameTwo, FrameThree):
+        for frame in (FrameOne, FrameTwo, FrameThree, FrameFour):
             this_frame = frame(self.frame_holder, self)
             self.all_frames[frame] = this_frame
             this_frame.grid(row=0, column=0, sticky="nsew")
@@ -64,6 +64,11 @@ class FrameOne(Frame):
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
         f1_button3.bind("<Return>", lambda event: master.next_frame(FrameThree))
         f1_button3.pack(pady=5, padx=5)
+        f1_button4 = Button(self, text="Game Statistieken", bg="#99A3A4", command=lambda: master.next_frame(FrameFour),
+                            borderwidth=5,
+                            relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
+        f1_button4.bind("<Return>", lambda event: master.next_frame(FrameFour))
+        f1_button4.pack(pady=5, padx=5)
 
 
 class FrameTwo(Frame):
@@ -99,7 +104,7 @@ class FrameThree(Frame):
     def __init__(self, parrent, master):
         Frame.__init__(self, parrent)
         master.create_background_logos(self)
-        self.sorted_list = {}
+        self.sorted_list = []
         label = Label(self, text="Sorting games", bg="#99A3A4", borderwidth=5, relief=RIDGE, font=master.font_type)
         label.pack(pady=20, padx=10, side=TOP)
         self.f3_Spinbox = Spinbox(self, values=master.catagorie_list, font=master.font_type)
@@ -113,7 +118,7 @@ class FrameThree(Frame):
         f3_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: master.next_frame(FrameOne), borderwidth=5,
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
         f3_button1.bind("<Return>", lambda event: master.next_frame(FrameOne))
-        f3_button1.pack(pady=4, padx=4, side=BOTTOM)
+        f3_button1.pack(pady=5, padx=5, side=BOTTOM)
 
 
     def gui_sort(self):
@@ -135,6 +140,19 @@ class FrameThree(Frame):
         self.f3_textbox.delete('1.0', END)
         self.f3_textbox.insert(END, item)
         self.f3_textbox.config(state=DISABLED)
+
+
+
+class FrameFour(Frame):
+    def __init__(self, parrent, master):
+        Frame.__init__(self, parrent)
+        master.create_background_logos(self)
+        f4_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: master.next_frame(FrameOne), borderwidth=5,
+                            relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
+        f4_button1.bind("<Return>", lambda event: master.next_frame(FrameOne))
+        f4_button1.pack(pady=5, padx=5, side=BOTTOM)
+        f4_label = Label(self, text="Statistieken", bg="#99A3A4", borderwidth=5, relief=RIDGE, font=master.font_type)
+        f4_label.pack(pady=20, padx=10, side=TOP)
 
 
 def resize_image(item, n_width, n_height, num):
