@@ -92,14 +92,14 @@ class Statistiek:
         for index in range(1, len(relevant_list)):  # Van af 1 vanwege tag
             amount += relevant_list[index]
         gemidelde = amount / (len(relevant_list) - 1)
-        print(int(gemidelde), "gemiddelt aantal", relevant_list[0])
+        # print(int(gemidelde), "gemiddelt aantal", relevant_list[0])
         return gemidelde
 
     def rnge(self, relevant_list):
         high = max(relevant_list[1:])
         low = min(relevant_list[1:])
         range_uitkomst = high - low
-        print(int(range_uitkomst), "range van", relevant_list[0])
+        # print(int(range_uitkomst), "range van", relevant_list[0])
         return range_uitkomst
 
     def median(self, relevant_list):
@@ -109,7 +109,7 @@ class Statistiek:
             mediaan = ((relevant_list[midden_punt] + relevant_list[midden_punt - 1]) / 2)
         else:
             mediaan = relevant_list[midden_punt + 1]  # Tag
-        print(mediaan, "median")
+        # print(mediaan, "median")
         return mediaan
 
     def variantie(self, relevant_list):
@@ -119,13 +119,13 @@ class Statistiek:
             afwijking = relevant_list[index] - var_gemidelde
             resultaat += afwijking * afwijking
         var = resultaat / len(self.steam2)
-        print(int(var), "variantie van", relevant_list[0])
+        # print(int(var), "variantie van", relevant_list[0])
         return var
 
     def standaard_def(self, relevant_list):
         var_list = self.variantie(relevant_list)
         antwoord = var_list ** (1 / 2)
-        print(int(antwoord), "standaarddeviatie van", relevant_list[0])
+        # print(int(antwoord), "standaarddeviatie van", relevant_list[0])
         return antwoord
 
     def kwartiel_gen(self, relevant_list):
@@ -139,7 +139,7 @@ class Statistiek:
             kwartiel_drie = self.median(relevant_list[middenpunt:])
         kwartiel_vier = relevant_list[-1]
         iqr = kwartiel_drie - kwartiel_een
-        print('Kwartiel 0 t/m 4 en iqr', kwartiel_null, kwartiel_een, kwartiel_twee, kwartiel_drie, kwartiel_vier, iqr)
+        # print('Kwartiel 0 t/m 4 en iqr', kwartiel_null, kwartiel_een, kwartiel_twee, kwartiel_drie, kwartiel_vier, iqr)
         return kwartiel_null, kwartiel_een, kwartiel_twee, kwartiel_drie, kwartiel_vier, iqr
 
 
