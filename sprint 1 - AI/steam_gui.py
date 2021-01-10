@@ -124,8 +124,6 @@ class FrameThree(Frame):
     def gui_sort(self):
         search = self.f3_Spinbox.get()
         self.sorted_list = sort_func.basic_sort(search)
-        # Waarom wacht die niet tot die het terug krijgt ???
-        # steam2 =  [(10, 'Counter-Strike', '2000-11-01', ... ), (20, 'Team Fortress Classic', '1999-04-01',... ), ...]
         insert_text = "Sorting on " + str(search) + '\n'
         for index in range(0, len(self.sorted_list)):
             num = index + 1
@@ -147,12 +145,38 @@ class FrameFour(Frame):
     def __init__(self, parrent, master):
         Frame.__init__(self, parrent)
         master.create_background_logos(self)
+        self.statistiek_cath = ['price', 'positive_ratings', 'negative_ratings', 'average_playtime']
         f4_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: master.next_frame(FrameOne), borderwidth=5,
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
         f4_button1.bind("<Return>", lambda event: master.next_frame(FrameOne))
         f4_button1.pack(pady=5, padx=5, side=BOTTOM)
         f4_label = Label(self, text="Statistieken", bg="#99A3A4", borderwidth=5, relief=RIDGE, font=master.font_type)
-        f4_label.pack(pady=20, padx=10, side=TOP)
+        f4_label.pack(pady=10, padx=10, side=TOP)
+        self.f4_Spinbox = Spinbox(self, values=self.statistiek_cath, font=master.font_type)
+        self.f4_Spinbox.pack(pady=4, padx=4, side=TOP)
+        self.f4_button1 = Button(self, text="Calculate Statistics", bg="#99A3A4", borderwidth=5, command=lambda: self.gui_calculate_all(),
+                            relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
+        self.f4_button1.bind("<Return>", lambda event: self.gui_calculate_all())
+        self.f4_button1.pack(pady=4, padx=4, side=TOP)
+        self.label1 = Label(self, text="      ", bg="#99A3A4", borderwidth=5, relief=RIDGE, font=master.font_type)
+        self.label1.pack(pady=10, padx=10)
+        self.label2 = Label(self, text="      ", bg="#99A3A4", borderwidth=5, relief=RIDGE, font=master.font_type)
+        self.label2.pack(pady=10, padx=10)
+
+    def gui_calculate_all(self):
+        calc = self.f4_Spinbox.get()
+        index = Startup.steam_cath[0].index(calc)
+        gemid_answer = calc_statistiek.gemiddelde(calc_statistiek.get_relevante_data(calc_statistiek.steam2, index))
+        range_answer = calc_statistiek.rnge(calc_statistiek.get_relevante_data(calc_statistiek.steam2, index))
+        # median_answer = calc_statistiek.median(calc_statistiek.get_relevante_data(sort_func.basic_sort(calc), index))
+        var_answer = calc_statistiek.variantie(calc_statistiek.get_relevante_data(calc_statistiek.steam2, index))
+        std_def = calc_statistiek.standaard_def(calc_statistiek.get_relevante_data(calc_statistiek.steam2, index))
+        # q0, q1, q2, q3, q4, iqr = calc_statistiek.kwartiel_gen(calc_statistiek.get_relevante_data(sort_func.basic_sort(calc), index))
+        string_one = "Gemiddelde: " + str(round(gemid_answer, 2)) + "  Range: " + str(round(range_answer, 2)) + \
+                     " Median: Off " + " Variantie: " + str(round(var_answer, 2))
+        string_Two = "Standaarddeviatie: " + str(round(std_def, 2)) + " Kwartiel 0 T/m 4: OFF "
+        self.label1["text"] = string_one
+        self.label2["text"] = string_Two
 
 
 def resize_image(item, n_width, n_height, num):
