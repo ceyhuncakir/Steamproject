@@ -1,5 +1,5 @@
 import json
-
+from random import randint
 
 class StartupApiTi:
     def __init__(self):
@@ -142,11 +142,94 @@ class Statistiek:
         print('Kwartiel 0 t/m 4 en iqr', kwartiel_null, kwartiel_een, kwartiel_twee, kwartiel_drie, kwartiel_vier, iqr)
         return kwartiel_null, kwartiel_een, kwartiel_twee, kwartiel_drie, kwartiel_vier, iqr
 
+class node:
+
+    def __init__(self, value=None):
+        self.value=value
+        self.left_child=None
+        self.right_child=None
+
+class binary_search_tree:
+
+    def __init__(self):
+        self.root=None
+
+    def insert(self, value):
+        if self.root==None:
+            self.root=node(value)
+        else:
+            self.insert_value(value, self.root)
+
+    def insert_value(self, value, current_node):
+        if value < current_node.value:
+            if current_node.left_child == None:
+                current_node.left_child == node(value)
+            else:
+                self.insert_value(value, current_node.left_child)
+        elif value > current_node.value:
+            if current_node.right_child == None:
+                current_node.right_child == node(value)
+            else:
+                self.insert_value(value, current_node.right_child)
+        else:
+            print("die waarde zit al in de tree")
+
+    def print_tree(self):
+        if self.root != None:
+            self.print_value(self.root)
+
+    def print_value(self, current_node):
+        if current_node != None:
+            self.print_value(current_node.left_child)
+            print(str(current_node.value))
+            self.print_value(current_node.right_child)
+
+    def height(self):
+        if self.root != None:
+            return self.get_height(self.root, 0)
+        else:
+            return 0
+
+    def get_height(self, current_node, current_height):
+        if current_node == None:
+            return current_height
+        left_height = self.get_height(current_node.left_child, current_height + 1)
+        right_height = self.get_height(current_node.right_child, current_height + 1)
+
+        return max(left_height, right_height)
+
+    def search(self, value):
+        if self.root != None:
+            return self.search_values(value, self.root)
+        else:
+            return False
+
+    def search_values(self, value, current_node):
+        if value == current_node.value:
+            return True
+        elif value < current_node.value and current_node.left_child != None:
+            return self.search_values(value, current_node.left_child)
+        elif value > current_node.value and current_node.right_child != None:
+            return self.search_values(value, current_node.right_child)
+        return False
+
+def fill_tree(tree, num_elems=200, max_int=1000):
+    for _ in range(num_elems):
+        cur_elem = randint(0, max_int)
+        tree.insert(cur_elem)
+    return tree
 
 Startup = StartupApiTi()
 Startup.inladen()
 sort_func = SortingAlgorithms(Startup.steam2, Startup.steam_cath)
 calc_statistiek = Statistiek(Startup.steam2, Startup.steam_cath)
+
+tree = binary_search_tree() # initialiseert de tree
+tree = fill_tree(tree) # vult automatisch de tree
+#tree.insert(8) # kunnen handmatig de tree vullen met values
+#tree.search(5) # kunnen op een bepaalde value kijken of de value in de tree bestaat zoja geeft het een true statement terug zo niet dan een false statement
+tree.print_tree() # print de hele tree met de hoogte van de tree
+print("boom hoogte: " + str(tree.height()))
 
 # Testing uikomst
 # calc_statistiek.gemiddelde(calc_statistiek.get_relevante_data(calc_statistiek.steam2, 17))
