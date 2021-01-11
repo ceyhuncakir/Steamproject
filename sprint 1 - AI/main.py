@@ -144,25 +144,32 @@ class Statistiek:
 
 
 class search_binaire:
-	def __init__(self):
-		self.steam_cath = []
+    def __init__(self):
+        self.steam_cath = []
 
-	def binary_search(self, list_al, target, cath):
-		higest = len(list_al) - 1
-		lowest = 0
-		while lowest <= higest:
-			index = (lowest + higest) // 2
-			if list_al[index][cath] == target:
-				return True, print(list_al[index][cath], list_al[index][1])
-			if list_al[index][cath] < target:
-				lowest = index + 1
-			if list_al[index][cath] > target:
-				higest = index - 1
-		return False
+    def binary_search(self, list_al, target, cath):
+        midden_punt = (len(list_al) - 1) // 2
+        if len(list_al) == 0:
+            return print('Not in list')
+        if list_al[midden_punt][cath] == target:
+            return search_b.get_all(list_al, target, cath)
+        if list_al[midden_punt][cath] < target:
+            return search_b.binary_search(list_al[midden_punt + 1:], target, cath)
+        if list_al[midden_punt][cath] > target:
+            return search_b.binary_search(list_al[:midden_punt], target, cath)
 
-	def get_all(self, list_al):
-		# Nog mee bezig
-		return
+    def get_all(self, list_al, target, cath):
+        low_num = 0
+        high_num = len(list_al) - 1
+        while list_al[low_num][cath] < target:
+            low_num += 1
+        while list_al[high_num][cath] > target:
+            high_num -= 1
+        return print(list_al[low_num:high_num + 1])
+
+#
+# test_list = [(1, 'bla'), (2, 'bla'), (3, 'bla1'), (3, 'bla2'), (3, 'bla3'), (4, 'bla'), (5, 'bla')]
+
 
 class node:
 	def __init__(self, value=None):
@@ -303,16 +310,12 @@ class binary_search_tree:
 		return False
 
 
-
-
-
 Startup = StartupApiTi()
 Startup.inladen()
 sort_func = SortingAlgorithms(Startup.steam2, Startup.steam_cath)
 calc_statistiek = Statistiek(Startup.steam2, Startup.steam_cath)
 search_b = search_binaire()
-search_b.binary_search(sort_func.basic_sort('price'), 5, 17)
-
+# search_b.binary_search(sort_func.basic_sort('price'), 5, 17)
 
 
 def fill_tree(tree, num_elems=20000000, max_int=10000000): # functie voor het vullen van de tree # moet later de waardes van de lijst binnen dit functie zetten.
