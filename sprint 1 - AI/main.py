@@ -280,22 +280,23 @@ class binary_search_tree:
 			return self._search(value, cur_node.right_child)
 		return False
 
-def fill_tree(tree, num_elems=200, max_int=1000): # functie voor het vullen van de tree # moet later de waardes van de lijst binnen dit functie zetten.
-    for _ in range(num_elems):
-        cur_elem = randint(0, max_int)
-        tree.insert(cur_elem)
-    return tree
 
 Startup = StartupApiTi()
 Startup.inladen()
 sort_func = SortingAlgorithms(Startup.steam2, Startup.steam_cath)
 calc_statistiek = Statistiek(Startup.steam2, Startup.steam_cath)
 
+
+def fill_tree(tree, num_elems=20000000, max_int=10000000): # functie voor het vullen van de tree # moet later de waardes van de lijst binnen dit functie zetten.
+    list = calc_statistiek.get_relevante_data(calc_statistiek.steam2, 0)
+    list = list[1:]
+    for i in list:
+        tree.insert(i)
+    return tree
+
 tree = binary_search_tree() # initialiseert de tree
-#tree = fill_tree(tree) # vult automatisch de tree
-tree.insert(8)
-tree.insert(9) # kunnen handmatig de tree vullen met values
-tree.insert(10)
+tree = fill_tree(tree) # vult automatisch de tree
+#tree.insert(9) # kunnen handmatig de tree vullen met values
 tree.print_tree() # print de hele tree met de hoogte van de tree
 #print(tree.search(10)) # kunnen op een bepaalde value kijken of de value in de tree bestaat zoja geeft het een true statement terug zo niet dan een false statement
 
