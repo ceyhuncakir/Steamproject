@@ -142,6 +142,28 @@ class Statistiek:
         # print('Kwartiel 0 t/m 4 en iqr', kwartiel_null, kwartiel_een, kwartiel_twee, kwartiel_drie, kwartiel_vier, iqr)
         return kwartiel_null, kwartiel_een, kwartiel_twee, kwartiel_drie, kwartiel_vier, iqr
 
+
+class search_binaire:
+	def __init__(self):
+		self.steam_cath = []
+
+	def binary_search(self, list_al, target, cath):
+		higest = len(list_al) - 1
+		lowest = 0
+		while lowest <= higest:
+			index = (lowest + higest) // 2
+			if list_al[index][cath] == target:
+				return True, print(list_al[index][cath], list_al[index][1])
+			if list_al[index][cath] < target:
+				lowest = index + 1
+			if list_al[index][cath] > target:
+				higest = index - 1
+		return False
+
+	def get_all(self, list_al):
+		# Nog mee bezig
+		return
+
 class node:
 	def __init__(self, value=None):
 		self.value = value # houd de value van de node in de tree
@@ -281,10 +303,16 @@ class binary_search_tree:
 		return False
 
 
+
+
+
 Startup = StartupApiTi()
 Startup.inladen()
 sort_func = SortingAlgorithms(Startup.steam2, Startup.steam_cath)
 calc_statistiek = Statistiek(Startup.steam2, Startup.steam_cath)
+search_b = search_binaire()
+search_b.binary_search(sort_func.basic_sort('price'), 5, 17)
+
 
 
 def fill_tree(tree, num_elems=20000000, max_int=10000000): # functie voor het vullen van de tree # moet later de waardes van de lijst binnen dit functie zetten.
