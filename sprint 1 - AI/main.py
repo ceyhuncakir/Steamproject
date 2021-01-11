@@ -24,8 +24,6 @@ class StartupApiTi:
                     temp_tuple = temp_tuple + tem
                 self.steam2.append(temp_tuple)
                 load_counter += 1
-        # Hier onder voorbeeld van uitkomst de steam_cath die zal worden gebruikt door de gui
-        # en steam2 is alle data van elke game in een lijst met tuples
         print(self.steam_cath)
         # steam_cath = [('appid', 'name', 'release_date', ... )]
         print(self.steam2[0])
@@ -80,7 +78,6 @@ class Statistiek:
 
     def get_relevante_data(self, given_list, index_location):
         # Zorgt dat alle relevante data bij elkaar wordt gehaald. (Voorkomt complicaties bij andere functies)
-        # Anders worden bepaalde functies ook herhaald bij bijvoorbeeld centrum en spreidings maten uitrekenen
         relevante_list = [self.steam_cath[0][index_location]]
         for item in given_list:
             relevante_list.append(item[index_location])
@@ -166,9 +163,6 @@ class search_binaire:
         while list_al[high_num][cath] > target:
             high_num -= 1
         return print(list_al[low_num:high_num + 1])
-
-#
-# test_list = [(1, 'bla'), (2, 'bla'), (3, 'bla1'), (3, 'bla2'), (3, 'bla3'), (4, 'bla'), (5, 'bla')]
 
 
 class node:
