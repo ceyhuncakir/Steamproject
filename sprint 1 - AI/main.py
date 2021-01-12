@@ -66,7 +66,7 @@ class SortingAlgorithms:
     def basic_sort_two(self, cath):
         sort_on = self.steam_cath[0].index(cath)
         sorted_steam = self.steam2.copy()
-        print("start basic selection sort")
+        # print("start basic selection sort")
         for index in range(0, len(self.steam2) - 1):
             min_index = index
             for index_two in range(index+1, len(self.steam2) - 1):
