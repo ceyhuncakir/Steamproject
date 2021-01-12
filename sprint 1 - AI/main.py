@@ -62,13 +62,26 @@ class SortingAlgorithms:
                 index_grens -= 1
         return sorted_steam
 
-	def quicksort(self, cath):
+    # "Niet haalbaar voor een 6 minuten filmpje"
+    def basic_sort_two(self, cath):
+        sort_on = self.steam_cath[0].index(cath)
+        sorted_steam = self.steam2.copy()
+        print("start basic selection sort")
+        for index in range(0, len(self.steam2) - 1):
+            min_index = index
+            for index_two in range(index+1, len(self.steam2) - 1):
+                if sorted_steam[min_index][sort_on] > sorted_steam[index_two][sort_on]:
+                    min_index = index_two
+            sorted_steam[index], sorted_steam[min_index] = sorted_steam[min_index], sorted_steam[index]
+        return sorted_steam
+
+    def quicksort(self, cath):
         print("start quicksort")
         sort_on = len(self.steam_cath[0].index(cath))
         sorted_steam = self.steam2.copy()
 
         if sort_on <= 1:
-            return cath
+            return cat
         else:
             pivot = cath.pop()
 
