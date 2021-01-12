@@ -2,7 +2,7 @@ import time
 from gpiozero import LED, Button
 from signal import pause
 
-# Importent funcions to use: led(position, onoroff) and RGBledupdate(pos, r, *args) and servo(angle)
+# Importent funcions to use: led(position, onoroff) and RGBledupdate(pos, r, *args), servo() en afstandsensor() [geeft cm terug]
 # voor de knop pas buttonpressed() en buttonlose() aan
 
 # defining the pins for the schuifregister
@@ -16,6 +16,9 @@ Serialneo = LED(23)
 button = Button(17)
 # defining the pin voor de servo
 servopin = LED(21)
+# defining the pins voor de afstand sensor
+trigger = LED(25)
+echo = Button(24)
 
 
 # variable for storing info about the leds
@@ -36,6 +39,10 @@ def buttonlose():
     fullcontrol([1, 0, 1, 0, 1, 0, 1, 0])
 
 
+
+# ----------------------------------------------------------------------------------------------------------------------
+# alles hier onder is voor het schuifregister, en die acht leds, tot waar aangegeven.
+# ----------------------------------------------------------------------------------------------------------------------
 # Defenition to update the schuifregister
 def fullcontrol(ledlist):
     Clock.off()  # starting off in the correct pos
@@ -62,6 +69,10 @@ def led(position, onoroff):
             ledsave[position] = onoroff
     fullcontrol(ledsave)  # update the leds to the correct pos
 
+# ----------------------------------------------------------------------------------------------------------------------
+# Alles tot hier is schuifregister gerelateerd
+# Alles hier onder is voor de RGB led strip tot waar aangevenen
+# ----------------------------------------------------------------------------------------------------------------------
 
 # definitie om een binaere split te krijgen van nummers als een lijst
 def binaerisplitter(num, bits):
@@ -109,19 +120,46 @@ def RGBledupdate(pos, r, *args):
         neosave[pos] = [r, args[0], args[1]]  # haal de waardes uit de gegeven RGB waardes
     neoupdate()
 
-def servo(angle):
+# ----------------------------------------------------------------------------------------------------------------------
+# Alles tot hier is RGB led strip gerelateerd
+# Alles hier onder is voor de servo tot waar aangevenen
+# ----------------------------------------------------------------------------------------------------------------------
+
+# defenition for servo
+def servo(): #servo will take less than 0.5 a sec to turn to and from, unfortunately nothing can be prossesed at the same time
     servopin.on()
-    time.sleep(0.0005+(0.000002*angle))
+    time.sleep(0.0004) #angle 0
     servopin.off()
+    time.sleep(0.4)
+    servopin.on()
+    time.sleep(0.0023) #angle 180
+    servopin.off()
+
+# ----------------------------------------------------------------------------------------------------------------------
+# Alles tot hier is servo gerelateerd
+# Alles hier onder is voor de afstand sensor tot waar aangevenen.
+# ----------------------------------------------------------------------------------------------------------------------
+
+def afstandsensor():
+    trigger.on()
+    time.sleep(0.000001)
+    trigger.off()
+
+    echo.wait_for_inactive(1)
+    time1 = time.time()
+    echo.wait_for_active(0.02)
+    time2 = time.time()
+    return round(17165 * (time2 - time1), 1)
+
+# ----------------------------------------------------------------------------------------------------------------------
+# Alles tot hier is afstand sensor gerelateerd
+# Alles hier onder is voor testen en een paar dingen resetten.
+# ----------------------------------------------------------------------------------------------------------------------
 
 fullcontrol([0, 0, 0, 0, 0, 0, 0, 0])
 neoupdate()
 
 button.when_pressed = buttonpressed
 button.when_released = buttonlose
-
-servo(30)
-# servo(10)
-# servo(100)
 
 pause()

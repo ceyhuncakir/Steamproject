@@ -24,8 +24,6 @@ class StartupApiTi:
                     temp_tuple = temp_tuple + tem
                 self.steam2.append(temp_tuple)
                 load_counter += 1
-        # Hier onder voorbeeld van uitkomst de steam_cath die zal worden gebruikt door de gui
-        # en steam2 is alle data van elke game in een lijst met tuples
         print(self.steam_cath)
         # steam_cath = [('appid', 'name', 'release_date', ... )]
         print(self.steam2[0])
@@ -48,12 +46,11 @@ class SortingAlgorithms:
         self.steam2 = list_1
         self.steam_cath = list_2
 
-    # inplaats van de sorted function (het werkt nog niet met de Gui)
     # "Niet haalbaar voor een 6 minuten filmpje"
+    # Voordeel: Als er niets verandert snel. Nadeel: Als er iets verandert duurt het eeuwig (Gui Crash)
     def basic_sort(self, cath):
-        print("start basic_sort")
+        print("start basic insertion sort")
         sort_on = self.steam_cath[0].index(cath)
-        # hier onder een insertion sort.
         sorted_steam = self.steam2.copy()
         for index in range(1, (len(sorted_steam))):
             copy_list = sorted_steam[index]
@@ -101,7 +98,6 @@ class Statistiek:
 
     def get_relevante_data(self, given_list, index_location):
         # Zorgt dat alle relevante data bij elkaar wordt gehaald. (Voorkomt complicaties bij andere functies)
-        # Anders worden bepaalde functies ook herhaald bij bijvoorbeeld centrum en spreidings maten uitrekenen
         relevante_list = [self.steam_cath[0][index_location]]
         for item in given_list:
             relevante_list.append(item[index_location])
@@ -165,25 +161,29 @@ class Statistiek:
 
 
 class search_binaire:
-	def __init__(self):
-		self.steam_cath = []
+    def __init__(self):
+        self.steam_cath = []
 
-	def binary_search(self, list_al, target, cath):
-		higest = len(list_al) - 1
-		lowest = 0
-		while lowest <= higest:
-			index = (lowest + higest) // 2
-			if list_al[index][cath] == target:
-				return True, print(list_al[index][cath], list_al[index][1])
-			if list_al[index][cath] < target:
-				lowest = index + 1
-			if list_al[index][cath] > target:
-				higest = index - 1
-		return False
+    def binary_search(self, list_al, target, cath):
+        midden_punt = (len(list_al) - 1) // 2
+        if len(list_al) == 0:
+            return print('Not in list')
+        if list_al[midden_punt][cath] == target:
+            return search_b.get_all(list_al, target, cath)
+        if list_al[midden_punt][cath] < target:
+            return search_b.binary_search(list_al[midden_punt + 1:], target, cath)
+        if list_al[midden_punt][cath] > target:
+            return search_b.binary_search(list_al[:midden_punt], target, cath)
 
-	def get_all(self, list_al):
-		# Nog mee bezig
-		return
+    def get_all(self, list_al, target, cath):
+        low_num = 0
+        high_num = len(list_al) - 1
+        while list_al[low_num][cath] < target:
+            low_num += 1
+        while list_al[high_num][cath] > target:
+            high_num -= 1
+        return print(list_al[low_num:high_num + 1])
+
 
 class node:
 	def __init__(self, value=None):
@@ -324,16 +324,12 @@ class binary_search_tree:
 		return False
 
 
-
-
-
 Startup = StartupApiTi()
 Startup.inladen()
 sort_func = SortingAlgorithms(Startup.steam2, Startup.steam_cath)
 calc_statistiek = Statistiek(Startup.steam2, Startup.steam_cath)
 search_b = search_binaire()
-search_b.binary_search(sort_func.basic_sort('price'), 5, 17)
-
+# search_b.binary_search(sort_func.basic_sort('price'), 5, 17)
 
 def fill_tree(tree, num_elems=20000000, max_int=10000000): # functie voor het vullen van de tree # moet later de waardes van de lijst binnen dit functie zetten.
     list = calc_statistiek.get_relevante_data(calc_statistiek.steam2, 0)
@@ -342,13 +338,13 @@ def fill_tree(tree, num_elems=20000000, max_int=10000000): # functie voor het vu
         tree.insert(i)
     return tree
 
-tree = binary_search_tree() # initialiseert de tree
-tree = fill_tree(tree) # vult automatisch de tree
+# tree = binary_search_tree() # initialiseert de tree
+# tree = fill_tree(tree) # vult automatisch de tree
 #tree.insert(9) # kunnen handmatig de tree vullen met values
-tree.print_tree() # print de hele tree met de hoogte van de tree
+# tree.print_tree() # print de hele tree met de hoogte van de tree
 #print(tree.search(10)) # kunnen op een bepaalde value kijken of de value in de tree bestaat zoja geeft het een true statement terug zo niet dan een false statement
 
-print("boom hoogte: " + str(tree.height()))
+# print("boom hoogte: " + str(tree.height()))
 
 # Testing uikomst
 # calc_statistiek.gemiddelde(calc_statistiek.get_relevante_data(calc_statistiek.steam2, 17))
