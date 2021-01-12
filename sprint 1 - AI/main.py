@@ -77,23 +77,42 @@ class SortingAlgorithms:
 
     def quicksort(self, cath):
         print("start quicksort")
-        sort_on = len(self.steam_cath[0].index(cath))
-        sorted_steam = self.steam2.copy()
 
-        if sort_on <= 1:
-            return cat
-        else:
-            pivot = cath.pop()
+        sort_on_data = self.steam_cath[0].index(cath)
+        data = self.steam2.copy()
 
-        greater = []
-        lower = []
+        print(sort_func.QuickSort_process(data, sort_on_data))
 
-        for i in len(sorted_steam):
-            if i > pivot:
-                greater.append(i)
-            else:
-                lower.append(i)
-        return quicksort(lower) + [pivot] + quicksort(greater)
+    def QuickSort_process(self, arr, sort_on):
+
+        elements = len(arr)
+
+        # Base case
+        if elements < 2:
+            return arr
+
+        current_position = 0  # Position of the partitioning element
+
+        for i in range(1, elements):  # Partitioning loop
+            if arr[i][sort_on] <= arr[0][sort_on]:
+                current_position += 1
+                temp = arr[i]
+                arr[i] = arr[current_position]
+                arr[current_position] = temp
+
+        temp = arr[0]
+        arr[0] = arr[current_position]
+        arr[current_position] = temp  # Brings pivot to it's appropriate position
+
+        left = sort_func.QuickSort_process(arr[0:current_position], sort_on)  # Sorts the elements to the left of pivot
+        right = sort_func.QuickSort_process(arr[current_position + 1:elements],
+                                            sort_on)  # sorts the elements to the right of pivot
+
+        arr = left + [arr[current_position]] + right  # Merging everything together
+
+        print(arr)
+
+        return arr
 
 
     # Als er niets verandert hoeft te worden 3 seconden
@@ -343,6 +362,8 @@ sort_func = SortingAlgorithms(Startup.steam2, Startup.steam_cath)
 calc_statistiek = Statistiek(Startup.steam2, Startup.steam_cath)
 search_b = search_binaire()
 # search_b.binary_search(sort_func.basic_sort('price'), 5, 17)
+
+sort_func.quicksort("appid")
 
 def fill_tree(tree, num_elems=20000000, max_int=10000000): # functie voor het vullen van de tree # moet later de waardes van de lijst binnen dit functie zetten.
     list = calc_statistiek.get_relevante_data(calc_statistiek.steam2, 0)
