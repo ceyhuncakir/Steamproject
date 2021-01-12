@@ -4,7 +4,7 @@ from PIL import Image, ImageTk
 import tkinter.font as font
 
 
-# Dit is de 3e prototype (Work in process).
+# Dit is de 4e prototype (Work in process).
 # Feedback of ideen zijn altijd welkome!
 
 image_list = {1: 'background_steam.png', 2: 'background.png', 3: 'consulting_logo.png'}
@@ -26,7 +26,7 @@ class SteamGui:
         for categorie in Startup.steam_cath[0]:
             self.catagorie_list.append(categorie)
         self.all_frames = {}
-        for frame in (FrameOne, FrameTwo, FrameThree, FrameFour):
+        for frame in (FrameOne, FrameTwo, FrameThree, FrameFour, FrameFive):
             this_frame = frame(self.frame_holder, self)
             self.all_frames[frame] = this_frame
             this_frame.grid(row=0, column=0, sticky="nsew")
@@ -56,7 +56,7 @@ class FrameOne(Frame):
                             font=master.font_type, activebackground='#99A3A4')
         f1_button3.bind("<Return>", lambda event: master.exit())
         f1_button3.pack(pady=10, padx=10, side=BOTTOM)
-        f1_button2 = Button(self, text="Show game names", bg="#99A3A4", command=lambda: master.next_frame(FrameTwo), borderwidth=5,
+        f1_button2 = Button(self, text="Toon game name", bg="#99A3A4", command=lambda: master.next_frame(FrameTwo), borderwidth=5,
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
         f1_button2.bind("<Return>", lambda event: master.next_frame(FrameTwo))
         f1_button2.pack(pady=5, padx=5)
@@ -64,10 +64,15 @@ class FrameOne(Frame):
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
         f1_button3.bind("<Return>", lambda event: master.next_frame(FrameThree))
         f1_button3.pack(pady=5, padx=5)
-        f1_button4 = Button(self, text="Game Statistieken", bg="#99A3A4", command=lambda: master.next_frame(FrameFour),
+        f1_button4 = Button(self, text="Game statistieken", bg="#99A3A4", command=lambda: master.next_frame(FrameFour),
                             borderwidth=5,
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
         f1_button4.bind("<Return>", lambda event: master.next_frame(FrameFour))
+        f1_button4.pack(pady=5, padx=5)
+        f1_button4 = Button(self, text="Game prijs lijst?", bg="#99A3A4", command=lambda: master.next_frame(FrameFive),
+                            borderwidth=5,
+                            relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
+        f1_button4.bind("<Return>", lambda event: master.next_frame(FrameFive))
         f1_button4.pack(pady=5, padx=5)
 
 
@@ -177,6 +182,18 @@ class FrameFour(Frame):
         string_Two = "Standaarddeviatie: " + str(round(std_def, 2)) + " Kwartiel 0 T/m 4: OFF "
         self.label1["text"] = string_one
         self.label2["text"] = string_Two
+
+
+class FrameFive(Frame):
+    def __init__(self, parrent, master):
+        Frame.__init__(self, parrent)
+        master.create_background_logos(self)
+        f5_label = Label(self, text="Game prijsen lijst", bg="#99A3A4", borderwidth=5, relief=RIDGE, font=master.font_type)
+        f5_label.pack(pady=10, padx=10, side=TOP)
+        f5_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: master.next_frame(FrameOne), borderwidth=5,
+                            relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
+        f5_button1.bind("<Return>", lambda event: master.next_frame(FrameOne))
+        f5_button1.pack(pady=5, padx=5, side=BOTTOM)
 
 
 def resize_image(item, n_width, n_height, num):

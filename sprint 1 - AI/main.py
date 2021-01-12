@@ -47,7 +47,8 @@ class SortingAlgorithms:
         self.steam_cath = list_2
 
     # "Niet haalbaar voor een 6 minuten filmpje"
-    def test_basic_sort(self, cath):
+    # Voordeel: Als er niets verandert snel. Nadeel: Als er iets verandert duurt het eeuwig (Gui Crash)
+    def basic_sort(self, cath):
         print("start basic insertion sort")
         sort_on = self.steam_cath[0].index(cath)
         sorted_steam = self.steam2.copy()
@@ -62,7 +63,8 @@ class SortingAlgorithms:
         return sorted_steam
 
     # "Niet haalbaar voor een 6 minuten filmpje"
-    def basic_sort(self, cath):
+    # Voordeel: Iets sneller. Nadeel: Ook als niks verandert is het langzaam (Gui Crash)
+    def basic_sort_2(self, cath):
         sort_on = self.steam_cath[0].index(cath)
         sorted_steam = self.steam2.copy()
         print("start basic selection sort")
@@ -320,7 +322,7 @@ Startup.inladen()
 sort_func = SortingAlgorithms(Startup.steam2, Startup.steam_cath)
 calc_statistiek = Statistiek(Startup.steam2, Startup.steam_cath)
 search_b = search_binaire()
-search_b.binary_search(sort_func.basic_sort('price'), 5, 17)
+# search_b.binary_search(sort_func.basic_sort('price'), 5, 17)
 
 
 def fill_tree(tree, num_elems=20000000, max_int=10000000): # functie voor het vullen van de tree # moet later de waardes van de lijst binnen dit functie zetten.
