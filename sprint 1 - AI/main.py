@@ -65,6 +65,27 @@ class SortingAlgorithms:
                 index_grens -= 1
         return sorted_steam
 
+	def quicksort(self, cath):
+        print("start quicksort")
+        sort_on = len(self.steam_cath[0].index(cath))
+        sorted_steam = self.steam2.copy()
+
+        if sort_on <= 1:
+            return cath
+        else:
+            pivot = cath.pop()
+
+        greater = []
+        lower = []
+
+        for i in len(sorted_steam):
+            if i > pivot:
+                greater.append(i)
+            else:
+                lower.append(i)
+        return quicksort(lower) + [pivot] + quicksort(greater)
+
+
     # Als er niets verandert hoeft te worden 3 seconden
     # basic_sort('appid')
     # Als er veel moet veranderen duurt het voor eeuwig (betere simple sort zoeken? of ligt het aan de indeling data)
@@ -312,7 +333,6 @@ sort_func = SortingAlgorithms(Startup.steam2, Startup.steam_cath)
 calc_statistiek = Statistiek(Startup.steam2, Startup.steam_cath)
 search_b = search_binaire()
 search_b.binary_search(sort_func.basic_sort('price'), 5, 17)
-
 
 
 def fill_tree(tree, num_elems=20000000, max_int=10000000): # functie voor het vullen van de tree # moet later de waardes van de lijst binnen dit functie zetten.
