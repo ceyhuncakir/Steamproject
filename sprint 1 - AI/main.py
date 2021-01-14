@@ -15,7 +15,7 @@ class StartupApiTi:
             for cath in data[0].keys():
                 temp.append(cath)
             self.steam_cath.append(tuple(temp))
-            # Categorien word gescheiden van de data voorkomt nuttelose data, (zou anders ook geen logies indeling weten)
+            # Categorien word gescheiden van de data voorkomt nuttelose data,
             load_counter = 0
             for item in data:
                 temp_tuple = ()
@@ -29,7 +29,7 @@ class StartupApiTi:
         print(self.steam2[0])
         # steam2 =  [(10, 'Counter-Strike', '2000-11-01', ... ), (20, 'Team Fortress Classic', '1999-04-01',... ), ...]
 
-    # Geen idee in welke classe name func
+
     def give_name(self):
         my_json_file = open('./data/steam.json', 'r')
         jsondata = my_json_file.read()
@@ -45,31 +45,40 @@ class SortingAlgorithms:
     def __init__(self, list_1, list_2):
         self.steam2 = list_1
         self.steam_cath = list_2
+        self.part_list = []
+        self.max_size = 800
 
-    # "Niet haalbaar voor een 6 minuten filmpje"
-    # Voordeel: Als er niets verandert snel. Nadeel: Als er iets verandert duurt het eeuwig (Gui Crash)
-    def basic_sort(self, cath):
+        def split_list():
+            for i in range(0, len(self.steam2), self.max_size):
+                self.part_list.append(self.steam2[i:i + self.max_size])
+        split_list()
+        # part_list = [[(), (), ()...700], [(), (), ()...700], [(), (), ()...700],......]
+        # Ergens bij houden waar je bent in de lijst om volgende chunck te krijgen
+
+
+    def basic_insertion(self, cath):
         print("start basic insertion sort")
         sort_on = self.steam_cath[0].index(cath)
-        sorted_steam = self.steam2.copy()
+        # sorted_steam = self.steam2.copy()
+        sorted_steam = self.part_list[0]
+
         for index in range(1, (len(sorted_steam))):
             copy_list = sorted_steam[index]
             index_grens = index
-            # print('something', index, len(sorted_steam)) # Hij doet het maar het duurt voor eeuwig als er veel verandert.
             while sorted_steam[index_grens][sort_on] < sorted_steam[index_grens - 1][sort_on] and index_grens > 0:
                 sorted_steam[index_grens] = sorted_steam[index_grens - 1]
                 sorted_steam[index_grens - 1] = copy_list
                 index_grens -= 1
         return sorted_steam
 
-    # "Niet haalbaar voor een 6 minuten filmpje"
-    def basic_sort_two(self, cath):
+    def basic_selection(self, cath):
         sort_on = self.steam_cath[0].index(cath)
-        sorted_steam = self.steam2.copy()
-        # print("start basic selection sort")
-        for index in range(0, len(self.steam2) - 1):
+        # sorted_steam = self.steam2.copy()
+        sorted_steam = self.part_list[0]
+        print("start basic selection sort")
+        for index in range(0, len(sorted_steam) - 1):
             min_index = index
-            for index_two in range(index+1, len(self.steam2) - 1):
+            for index_two in range(index+1, len(sorted_steam) - 1):
                 if sorted_steam[min_index][sort_on] > sorted_steam[index_two][sort_on]:
                     min_index = index_two
             sorted_steam[index], sorted_steam[min_index] = sorted_steam[min_index], sorted_steam[index]
@@ -79,9 +88,9 @@ class SortingAlgorithms:
         print("start quicksort")
 
         sort_on_data = self.steam_cath[0].index(cath)
-        data = self.steam2.copy()
-
-        print(sort_func.QuickSort_process(data, sort_on_data))
+        # data = self.steam2.copy()
+        data = self.part_list[0]
+        return_data = sort_func.QuickSort_process(data, sort_on_data)
 
     def QuickSort_process(self, arr, sort_on):
 
@@ -111,16 +120,10 @@ class SortingAlgorithms:
         arr = left + [arr[current_position]] + right  # Merging everything together
 
         print(arr)
-
+        # De Quiq sort maakt niet 1 lijst, maar een X aantal lijsten die snel 1 voor 1 terug worden geven.
+        # Dit gaat niet werken ?!
         return arr
 
-
-    # Als er niets verandert hoeft te worden 3 seconden
-    # basic_sort('appid')
-    # Als er veel moet veranderen duurt het voor eeuwig (betere simple sort zoeken? of ligt het aan de indeling data)
-    # basic_sort('price')
-    # basic_sort('name')
-    # basic_sort('positive_ratings')
 
 
 class Statistiek:
@@ -129,7 +132,7 @@ class Statistiek:
         self.steam_cath = list_2
 
     def get_relevante_data(self, given_list, index_location):
-        # Zorgt dat alle relevante data bij elkaar wordt gehaald. (Voorkomt complicaties bij andere functies)
+        # Zorgt dat alle relevante data bij elkaar wordt gehaald.
         relevante_list = [self.steam_cath[0][index_location]]
         for item in given_list:
             relevante_list.append(item[index_location])
@@ -363,7 +366,7 @@ calc_statistiek = Statistiek(Startup.steam2, Startup.steam_cath)
 search_b = search_binaire()
 # search_b.binary_search(sort_func.basic_sort('price'), 5, 17)
 
-sort_func.quicksort("appid")
+# sort_func.quicksort("price")
 
 def fill_tree(tree, num_elems=20000000, max_int=10000000): # functie voor het vullen van de tree # moet later de waardes van de lijst binnen dit functie zetten.
     list = calc_statistiek.get_relevante_data(calc_statistiek.steam2, 0)
@@ -389,59 +392,3 @@ def fill_tree(tree, num_elems=20000000, max_int=10000000): # functie voor het vu
 # calc_statistiek.kwartiel_gen(calc_statistiek.get_relevante_data(sort_func.basic_sort('price'), 17))
 
 
-# Hier Onder Tijdelijke backup oude functies tot bevestiging van joost over vraag
-
-# def rnge(index_location):
-#     rnge_list = steam2.copy()
-#     higest = rnge_list[0][index_location]
-#     lowest = rnge_list[0][index_location]
-#     for index in range(0, (len(rnge_list)) - 1):
-#         if higest < rnge_list[index][index_location]:
-#             higest = rnge_list[index][index_location]
-#         if lowest > rnge_list[index][index_location]:
-#             lowest = rnge_list[index][index_location]
-#     range_uitkomst = higest - lowest
-#     print(int(range_uitkomst), "range van", steam_cath[0][index_location])
-#     return range_uitkomst
-
-# def median(index_location):
-#     sort_list = basic_sort(steam_cath[0][index_location])
-#     lenght_list = len(sort_list)
-#     midden_punt = lenght_list//2
-#     if lenght_list % 2 == 0:
-#         mediaan = ((sort_list[midden_punt][index_location] + sort_list[midden_punt-1][index_location]) / 2)
-#     else:
-#         mediaan = sort_list[midden_punt][index_location]
-#     print(mediaan, "median van", steam_cath[0][index_location])
-
-# def variantie(index_location):
-#     var_gemidelde = gemidelde(index_location)
-#     resultaat = 0
-#     for item in steam2:
-#         afwijking = item[index_location] - var_gemidelde
-#         resultaat += afwijking * afwijking
-#     var = resultaat / len(steam2)
-#     print(int(var), "variantie van", steam_cath[0][index_location])
-#     return var
-
-# def interkwartiel_sub(list_num):
-#     lenghte_list = len(list_num)
-#     midden_punt = lenghte_list // 2
-#     if lenghte_list % 2 == 0:
-#         mediaan = ((list_num[midden_punt] + list_num[midden_punt-1]) / 2)
-#     else:
-#         mediaan = list_num[midden_punt]
-#     return mediaan
-#
-#
-# def interkwatiel(index_location):
-#     sort_list = basic_sort(steam_cath[0][index_location])
-#     lenghte_list = len(sort_list)
-#     midden_punt = lenghte_list // 2
-#     q1 = interkwartiel_sub(sort_list[:midden_punt])
-#     if len(sort_list) % 2 == 0:
-#         q3 = interkwartiel_sub(sort_list[midden_punt:])
-#     else:
-#         q3 = interkwartiel_sub(sort_list[midden_punt + 1:])
-#     ikr = q3 - q1
-#     print(int(ikr), "interkwatiel van", steam_cath[0][index_location])

@@ -128,7 +128,7 @@ class FrameThree(Frame):
 
     def gui_sort(self):
         search = self.f3_Spinbox.get()
-        self.sorted_list = sort_func.basic_sort(search)
+        self.sorted_list = sort_func.basic_insertion(search)
         insert_text = "Sorting on " + str(search) + '\n'
         for index in range(0, len(self.sorted_list)):
             num = index + 1
