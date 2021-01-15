@@ -26,7 +26,7 @@ class SteamGui:
         for categorie in Startup.steam_cath[0]:
             self.catagorie_list.append(categorie)
         self.all_frames = {}
-        for frame in (FrameOne, FrameTwo, FrameThree, FrameFour, FrameFive):
+        for frame in (FrameOne, FrameTwo, FrameThree, FrameFour, FrameFive, FramesixTree, FramesevenTI):
             this_frame = frame(self.frame_holder, self)
             self.all_frames[frame] = this_frame
             this_frame.grid(row=0, column=0, sticky="nsew")
@@ -52,10 +52,10 @@ class FrameOne(Frame):
         master.create_background_logos(self)
         label = Label(self, text="Main Menu", bg="#99A3A4", borderwidth=5, relief=RIDGE, font=master.font_type)
         label.pack(pady=80, padx=10)
-        f1_button3 = Button(self, text="Exit", bg="#99A3A4", command=lambda: master.exit(), borderwidth=5, relief=RIDGE,
+        f1_button1 = Button(self, text="Exit", bg="#99A3A4", command=lambda: master.exit(), borderwidth=5, relief=RIDGE,
                             font=master.font_type, activebackground='#99A3A4')
-        f1_button3.bind("<Return>", lambda event: master.exit())
-        f1_button3.pack(pady=10, padx=10, side=BOTTOM)
+        f1_button1.bind("<Return>", lambda event: master.exit())
+        f1_button1.pack(pady=10, padx=10, side=BOTTOM)
         f1_button2 = Button(self, text="Toon game name", bg="#99A3A4", command=lambda: master.next_frame(FrameTwo), borderwidth=5,
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
         f1_button2.bind("<Return>", lambda event: master.next_frame(FrameTwo))
@@ -69,11 +69,21 @@ class FrameOne(Frame):
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
         f1_button4.bind("<Return>", lambda event: master.next_frame(FrameFour))
         f1_button4.pack(pady=5, padx=5)
-        f1_button4 = Button(self, text="Game prijs lijst?", bg="#99A3A4", command=lambda: master.next_frame(FrameFive),
+        f1_button5 = Button(self, text="Game prijsen", bg="#99A3A4", command=lambda: master.next_frame(FrameFive),
                             borderwidth=5,
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
-        f1_button4.bind("<Return>", lambda event: master.next_frame(FrameFive))
-        f1_button4.pack(pady=5, padx=5)
+        f1_button5.bind("<Return>", lambda event: master.next_frame(FrameFive))
+        f1_button5.pack(pady=5, padx=5)
+        f1_button6 = Button(self, text="Search Tree", bg="#99A3A4", command=lambda: master.next_frame(FramesixTree),
+                            borderwidth=5,
+                            relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
+        f1_button6.bind("<Return>", lambda event: master.next_frame(FrameFive))
+        f1_button6.pack(pady=5, padx=5)
+        f1_button7 = Button(self, text="TI in project", bg="#99A3A4", command=lambda: master.next_frame(FramesevenTI),
+                            borderwidth=5,
+                            relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
+        f1_button7.bind("<Return>", lambda event: master.next_frame(FrameFive))
+        f1_button7.pack(pady=5, padx=5)
 
 
 class FrameTwo(Frame):
@@ -190,10 +200,89 @@ class FrameFive(Frame):
         master.create_background_logos(self)
         f5_label = Label(self, text="Game prijsen lijst", bg="#99A3A4", borderwidth=5, relief=RIDGE, font=master.font_type)
         f5_label.pack(pady=10, padx=10, side=TOP)
-        f5_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: master.next_frame(FrameOne), borderwidth=5,
+        f5_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: [master.next_frame(FrameOne), Startup.reset_part()], borderwidth=5,
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
         f5_button1.bind("<Return>", lambda event: master.next_frame(FrameOne))
         f5_button1.pack(pady=5, padx=5, side=BOTTOM)
+        self.f5_entry = Entry(self)
+        self.f5_entry.pack(pady=5, padx=5)
+        self.f4_button1 = Button(self, text="Ok", bg="#99A3A4", borderwidth=5, command=lambda: self.check_input(),
+                            relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
+        self.f4_button1.bind("<Return>", lambda event: self.check_input())
+        self.f4_button1.pack(pady=4, padx=4, side=TOP)
+        self.f4_textbox = Text(self)
+        self.f4_textbox.pack(pady=4, padx=4, side=TOP, fill=Y, expand=YES)
+        f5_button1 = Button(self, text="Next list", bg="#99A3A4", command=lambda: self.check_nextlist(), borderwidth=5,
+                            relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
+        f5_button1.bind("<Return>", lambda event: self.check_nextlist())
+        f5_button1.pack(pady=5, padx=5)
+
+    def check_input(self):
+        check = self.f5_entry.get()
+        if check.isdigit():
+            self.get_gui_list(float(check))
+
+    def get_gui_list(self, target):
+        list = sort_func.basic_insertion('price')
+        search_list = search_b.binary_search(list, target, 17)
+        insert_text = "Searching on " + str(target) + '\n'
+        for index in range(0, (len(search_list)-1)):
+            num = index + 1
+            game_name = search_list[index][1]
+            price = search_list[index][17]
+            insert_text += str(num) + ' Game: ' + str(game_name) + ' Price: ' + str(price) + '\n'
+        self.gui_insert_text(insert_text)
+
+    def check_nextlist(self):
+        Startup.next_part()
+        self.check_input()
+
+    def gui_insert_text(self, item):
+        self.f4_textbox.config(state=NORMAL)
+        self.f4_textbox.delete('1.0', END)
+        self.f4_textbox.insert(END, item)
+        self.f4_textbox.config(state=DISABLED)
+
+
+
+
+
+class FramesixTree(Frame):
+    def __init__(self, parrent, master):
+        Frame.__init__(self, parrent)
+        master.create_background_logos(self)
+        f6_label = Label(self, text="Search Tree", bg="#99A3A4", borderwidth=5, relief=RIDGE, font=master.font_type)
+        f6_label.pack(pady=80, padx=10, side=TOP)
+        f2_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: master.next_frame(FrameOne), borderwidth=5,
+                            relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
+        f2_button1.bind("<Return>", lambda event: master.next_frame(FrameOne))
+        f2_button1.pack(pady=10, padx=10, side=BOTTOM)
+        f2_button2 = Button(self, text="Show", bg="#99A3A4", borderwidth=5, command=lambda: self.wraper(),
+                            relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
+        f2_button2.bind("<Return>", lambda event: self.wraper())
+        f2_button2.pack(pady=4, padx=4)
+
+    def wraper(self):
+        return
+
+
+class FramesevenTI(Frame):
+    def __init__(self, parrent, master):
+        Frame.__init__(self, parrent)
+        master.create_background_logos(self)
+        f7_label = Label(self, text="TI in project", bg="#99A3A4", borderwidth=5, relief=RIDGE, font=master.font_type)
+        f7_label.pack(pady=80, padx=10, side=TOP)
+        f2_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: master.next_frame(FrameOne), borderwidth=5,
+                            relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
+        f2_button1.bind("<Return>", lambda event: master.next_frame(FrameOne))
+        f2_button1.pack(pady=10, padx=10, side=BOTTOM)
+        f2_button2 = Button(self, text="Show", bg="#99A3A4", borderwidth=5, command=lambda: self.wraper(),
+                            relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
+        f2_button2.bind("<Return>", lambda event: self.wraper())
+        f2_button2.pack(pady=4, padx=4)
+
+    def wraper(self):
+        return
 
 
 def resize_image(item, n_width, n_height, num):

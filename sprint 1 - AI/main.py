@@ -6,6 +6,22 @@ class StartupApiTi:
         self.steam2 = []
         self.steam_cath = []
         self.counter = 0
+        self.part_list = []
+        self.max_size = 6000  # limit Gui(Crash), limit recursion.
+        self.part_index = 0
+
+    def split_list(self):
+        for i in range(0, len(self.steam2), self.max_size):
+            self.part_list.append(self.steam2[i:i + self.max_size])
+            # part_list = [[(), (), ()...700], [(), (), ()...700], [(), (), ()...700],......]
+
+    def next_part(self):
+        self.part_index += 1
+        if self.part_index > (len(self.part_list) - 1):
+            self.part_index = 0
+
+    def reset_part(self):
+        self.part_index = 0
 
     def inladen(self):
         with open('./Data/steam.json', 'r') as steamdata:
@@ -45,22 +61,13 @@ class SortingAlgorithms:
     def __init__(self, list_1, list_2):
         self.steam2 = list_1
         self.steam_cath = list_2
-        self.part_list = []
-        self.max_size = 800
-
-        def split_list():
-            for i in range(0, len(self.steam2), self.max_size):
-                self.part_list.append(self.steam2[i:i + self.max_size])
-        split_list()
-        # part_list = [[(), (), ()...700], [(), (), ()...700], [(), (), ()...700],......]
-        # Ergens bij houden waar je bent in de lijst om volgende chunck te krijgen
 
 
     def basic_insertion(self, cath):
         print("start basic insertion sort")
         sort_on = self.steam_cath[0].index(cath)
         # sorted_steam = self.steam2.copy()
-        sorted_steam = self.part_list[0]
+        sorted_steam = Startup.part_list[Startup.part_index]
 
         for index in range(1, (len(sorted_steam))):
             copy_list = sorted_steam[index]
@@ -74,7 +81,7 @@ class SortingAlgorithms:
     def basic_selection(self, cath):
         sort_on = self.steam_cath[0].index(cath)
         # sorted_steam = self.steam2.copy()
-        sorted_steam = self.part_list[0]
+        sorted_steam = Startup.part_list[Startup.part_index]
         print("start basic selection sort")
         for index in range(0, len(sorted_steam) - 1):
             min_index = index
@@ -89,8 +96,13 @@ class SortingAlgorithms:
 
         sort_on_data = self.steam_cath[0].index(cath)
         # data = self.steam2.copy()
-        data = self.part_list[0]
+        # print(Startup.part_index)
+        # print(Startup.part_list)
+        data = Startup.part_list[Startup.part_index]
         return_data = sort_func.QuickSort_process(data, sort_on_data)
+        # print(return_data[0])
+        # print(return_data[1])
+        # print(len(return_data))
 
     def QuickSort_process(self, arr, sort_on):
 
@@ -119,9 +131,7 @@ class SortingAlgorithms:
 
         arr = left + [arr[current_position]] + right  # Merging everything together
 
-        print(arr)
-        # De Quiq sort maakt niet 1 lijst, maar een X aantal lijsten die snel 1 voor 1 terug worden geven.
-        # Dit gaat niet werken ?!
+        # print(arr)
         return arr
 
 
@@ -202,7 +212,7 @@ class search_binaire:
     def binary_search(self, list_al, target, cath):
         midden_punt = (len(list_al) - 1) // 2
         if len(list_al) == 0:
-            return print('Not in list')
+            return [('Not in this list'),]
         if list_al[midden_punt][cath] == target:
             return search_b.get_all(list_al, target, cath)
         if list_al[midden_punt][cath] < target:
@@ -213,11 +223,12 @@ class search_binaire:
     def get_all(self, list_al, target, cath):
         low_num = 0
         high_num = len(list_al) - 1
-        while list_al[low_num][cath] < target:
+        while int(list_al[low_num][cath]) < target:
             low_num += 1
-        while list_al[high_num][cath] > target:
+        while int(list_al[high_num][cath]) > target:
             high_num -= 1
-        return print(list_al[low_num:high_num + 1])
+        print("here")
+        return list_al[low_num:high_num + 1]
 
 
 class node:
@@ -361,12 +372,16 @@ class binary_search_tree:
 
 Startup = StartupApiTi()
 Startup.inladen()
+Startup.split_list()
 sort_func = SortingAlgorithms(Startup.steam2, Startup.steam_cath)
 calc_statistiek = Statistiek(Startup.steam2, Startup.steam_cath)
 search_b = search_binaire()
 # search_b.binary_search(sort_func.basic_sort('price'), 5, 17)
 
-# sort_func.quicksort("price")
+sort_func.quicksort("price")
+Startup.next_part()
+sort_func.quicksort("price")
+
 
 def fill_tree(tree, num_elems=20000000, max_int=10000000): # functie voor het vullen van de tree # moet later de waardes van de lijst binnen dit functie zetten.
     list = calc_statistiek.get_relevante_data(calc_statistiek.steam2, 0)
