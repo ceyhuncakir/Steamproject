@@ -11,16 +11,19 @@ class StartupApiTi:
         self.part_index = 0
 
     def split_list(self):
+        # De data is te groot en wordt hier gesplit.
         for i in range(0, len(self.steam2), self.max_size):
             self.part_list.append(self.steam2[i:i + self.max_size])
             # part_list = [[(), (), ()...700], [(), (), ()...700], [(), (), ()...700],......]
 
     def next_part(self):
+        # Verplaats/verwerk in gui
         self.part_index += 1
         if self.part_index > (len(self.part_list) - 1):
             self.part_index = 0
 
     def reset_part(self):
+        # Verplaats/verwerk in gui
         self.part_index = 0
 
     def inladen(self):
@@ -97,7 +100,6 @@ class SortingAlgorithms:
         # print(Startup.part_index)
         # print(Startup.part_list)
         data = Startup.part_list[Startup.part_index]
-        print(len(data))
         return_data = sort_func.QuickSort_process(data, sort_on_data)
         return return_data
         # print(return_data[0])
@@ -209,13 +211,14 @@ class search_binaire:
 
     def binary_search(self, list_al, target, cath):
         midden_punt = (len(list_al) - 1) // 2
+        # Binary search met Int om de verschilende games rond het gegeven getal te geven.
         if len(list_al) == 0:
-            return [('Not in this list'),]
-        if list_al[midden_punt][cath] == target:
+            return []
+        if int(list_al[midden_punt][cath]) == target:
             return search_b.get_all(list_al, target, cath)
-        if list_al[midden_punt][cath] < target:
+        if int(list_al[midden_punt][cath]) < target:
             return search_b.binary_search(list_al[midden_punt + 1:], target, cath)
-        if list_al[midden_punt][cath] > target:
+        if int(list_al[midden_punt][cath]) > target:
             return search_b.binary_search(list_al[:midden_punt], target, cath)
 
     def get_all(self, list_al, target, cath):
@@ -225,7 +228,6 @@ class search_binaire:
             low_num += 1
         while int(list_al[high_num][cath]) > target:
             high_num -= 1
-        print("here")
         return list_al[low_num:high_num + 1]
 
 
