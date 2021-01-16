@@ -7,7 +7,7 @@ class StartupApiTi:
         self.steam_cath = []
         self.counter = 0
         self.part_list = []
-        self.max_size = 6000  # limit Gui(Crash), limit recursion.
+        self.max_size = 987  # limit Gui = 5000, limit recursion = 987.
         self.part_index = 0
 
     def split_list(self):
@@ -58,8 +58,7 @@ class StartupApiTi:
 
 
 class SortingAlgorithms:
-    def __init__(self, list_1, list_2):
-        self.steam2 = list_1
+    def __init__(self, list_2):
         self.steam_cath = list_2
 
 
@@ -93,13 +92,14 @@ class SortingAlgorithms:
 
     def quicksort(self, cath):
         print("start quicksort")
-
         sort_on_data = self.steam_cath[0].index(cath)
         # data = self.steam2.copy()
         # print(Startup.part_index)
         # print(Startup.part_list)
         data = Startup.part_list[Startup.part_index]
+        print(len(data))
         return_data = sort_func.QuickSort_process(data, sort_on_data)
+        return return_data
         # print(return_data[0])
         # print(return_data[1])
         # print(len(return_data))
@@ -135,10 +135,8 @@ class SortingAlgorithms:
         return arr
 
 
-
 class Statistiek:
-    def __init__(self, list_1, list_2):
-        self.steam2 = list_1
+    def __init__(self, list_2):
         self.steam_cath = list_2
 
     def get_relevante_data(self, given_list, index_location):
@@ -180,7 +178,7 @@ class Statistiek:
         for index in range(1, len(relevant_list)):
             afwijking = relevant_list[index] - var_gemidelde
             resultaat += afwijking * afwijking
-        var = resultaat / len(self.steam2)
+        var = resultaat / len(relevant_list)
         # print(int(var), "variantie van", relevant_list[0])
         return var
 
@@ -373,8 +371,8 @@ class binary_search_tree:
 Startup = StartupApiTi()
 Startup.inladen()
 Startup.split_list()
-sort_func = SortingAlgorithms(Startup.steam2, Startup.steam_cath)
-calc_statistiek = Statistiek(Startup.steam2, Startup.steam_cath)
+sort_func = SortingAlgorithms(Startup.steam_cath)
+calc_statistiek = Statistiek(Startup.steam_cath)
 search_b = search_binaire()
 # search_b.binary_search(sort_func.basic_sort('price'), 5, 17)
 

@@ -113,6 +113,7 @@ class FrameTwo(Frame):
     def gui_clean_name(self):
         self.label1["text"] = "      "
         self.f2_button2.config(text="Show game")
+        Startup.reset_part()
 
 
 class FrameThree(Frame):
@@ -122,30 +123,64 @@ class FrameThree(Frame):
         self.sorted_list = []
         label = Label(self, text="Sorting games", bg="#99A3A4", borderwidth=5, relief=RIDGE, font=master.font_type)
         label.pack(pady=20, padx=10, side=TOP)
+        self.sorting_method = ["Insertion Sort", "Selection Sort", "Quiq Sort"]
+        self.f3_Spinbox2 = Spinbox(self, values=self.sorting_method, font=master.font_type)
+        self.f3_Spinbox2.pack(pady=4, padx=4, side=TOP)
         self.f3_Spinbox = Spinbox(self, values=master.catagorie_list, font=master.font_type)
         self.f3_Spinbox.pack(pady=4, padx=4, side=TOP)
-        f3_button2 = Button(self, text="Sort", bg="#99A3A4", borderwidth=5, command=lambda: self.gui_sort(),
+        f3_button2 = Button(self, text="Sort", bg="#99A3A4", borderwidth=5, command=lambda: self.get_sort_method(),
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
         f3_button2.bind("<Return>", lambda event: master.next_frame(FrameOne))
         f3_button2.pack(pady=4, padx=4, side=TOP)
         self.f3_textbox = Text(self)
         self.f3_textbox.pack(pady=4, padx=4, side=TOP, fill=Y, expand=YES)
-        f3_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: master.next_frame(FrameOne), borderwidth=5,
-                            relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
+        f3_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: [master.next_frame(FrameOne), Startup.reset_part(),
+                                                                              self.gui_insert_text(" ")], borderwidth=5, relief=RIDGE,
+                            font=master.font_type, activebackground='#99A3A4')
         f3_button1.bind("<Return>", lambda event: master.next_frame(FrameOne))
         f3_button1.pack(pady=5, padx=5, side=BOTTOM)
+        f3_button3 = Button(self, text="Next list", bg="#99A3A4", command=lambda: self.check_nextlist(), borderwidth=5,
+                            relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
+        f3_button3.bind("<Return>", lambda event: self.check_nextlist())
+        f3_button3.pack(pady=5, padx=5)
 
 
-    def gui_sort(self):
+    def get_sort_method(self):
+        find = self.f3_Spinbox2.get()
+        index = self.sorting_method.index(find)
         search = self.f3_Spinbox.get()
-        self.sorted_list = sort_func.basic_insertion(search)
+        if index == 0:
+            print("happend1")
+            self.sorted_list = sort_func.basic_insertion(search)
+        elif index == 1:
+            print("happend2")
+            self.sorted_list = sort_func.basic_selection(search)
+        elif index == 2:
+            print("happend3")
+            self.sorted_list = sort_func.quicksort(search)
+        self.gui_sort(search)
+
+
+    def gui_sort(self, search):
+        # search = self.f3_Spinbox.get()
+        # self.sorted_list = sort_func.basic_insertion(search)
         insert_text = "Sorting on " + str(search) + '\n'
+        cath_num = Startup.steam_cath[0].index(search)
         for index in range(0, len(self.sorted_list)):
             num = index + 1
             game_name = self.sorted_list[index][1]
-            date = self.sorted_list[index][2]
-            insert_text += str(num) + ' Game: ' + str(game_name) + ' Release date: ' + str(date) + '\n'
+            cath = self.sorted_list[index][cath_num]
+            if cath_num == 1:
+                insert_text += str(num) + " " + str(search) + ": " + str(cath) + '\n'
+            else:
+                insert_text += str(num) + ' Game: ' + str(game_name) + " " + str(search) + " " + str(cath) + '\n'
+
         self.gui_insert_text(insert_text)
+
+
+    def check_nextlist(self):
+        Startup.next_part()
+        self.get_sort_method()
 
 
     def gui_insert_text(self, item):
@@ -161,7 +196,7 @@ class FrameFour(Frame):
         Frame.__init__(self, parrent)
         master.create_background_logos(self)
         self.statistiek_cath = ['price', 'positive_ratings', 'negative_ratings', 'average_playtime']
-        f4_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: master.next_frame(FrameOne), borderwidth=5,
+        f4_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: [master.next_frame(FrameOne), self.gui_clean_name()], borderwidth=5,
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
         f4_button1.bind("<Return>", lambda event: master.next_frame(FrameOne))
         f4_button1.pack(pady=5, padx=5, side=BOTTOM)
@@ -177,21 +212,35 @@ class FrameFour(Frame):
         self.label1.pack(pady=10, padx=10)
         self.label2 = Label(self, text="      ", bg="#99A3A4", borderwidth=5, relief=RIDGE, font=master.font_type)
         self.label2.pack(pady=10, padx=10)
+        f3_button3 = Button(self, text="Next", bg="#99A3A4", command=lambda: self.check_nextlist(), borderwidth=5,
+                            relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
+        f3_button3.bind("<Return>", lambda event: self.check_nextlist())
+        f3_button3.pack(pady=5, padx=5, side=BOTTOM)
 
     def gui_calculate_all(self):
         calc = self.f4_Spinbox.get()
         index = Startup.steam_cath[0].index(calc)
-        gemid_answer = calc_statistiek.gemiddelde(calc_statistiek.get_relevante_data(calc_statistiek.steam2, index))
-        range_answer = calc_statistiek.rnge(calc_statistiek.get_relevante_data(calc_statistiek.steam2, index))
-        # median_answer = calc_statistiek.median(calc_statistiek.get_relevante_data(sort_func.basic_sort(calc), index))
-        var_answer = calc_statistiek.variantie(calc_statistiek.get_relevante_data(calc_statistiek.steam2, index))
-        std_def = calc_statistiek.standaard_def(calc_statistiek.get_relevante_data(calc_statistiek.steam2, index))
-        # q0, q1, q2, q3, q4, iqr = calc_statistiek.kwartiel_gen(calc_statistiek.get_relevante_data(sort_func.basic_sort(calc), index))
+        gemid_answer = calc_statistiek.gemiddelde(calc_statistiek.get_relevante_data(Startup.part_list[Startup.part_index], index))
+        range_answer = calc_statistiek.rnge(calc_statistiek.get_relevante_data(Startup.part_list[Startup.part_index], index))
+        median_answer = calc_statistiek.median(calc_statistiek.get_relevante_data(sort_func.basic_insertion(calc), index))
+        var_answer = calc_statistiek.variantie(calc_statistiek.get_relevante_data(Startup.part_list[Startup.part_index], index))
+        std_def = calc_statistiek.standaard_def(calc_statistiek.get_relevante_data(Startup.part_list[Startup.part_index], index))
+        q0, q1, q2, q3, q4, iqr = calc_statistiek.kwartiel_gen(calc_statistiek.get_relevante_data(sort_func.basic_insertion(calc), index))
         string_one = "Gemiddelde: " + str(round(gemid_answer, 2)) + "  Range: " + str(round(range_answer, 2)) + \
-                     " Median: Off " + " Variantie: " + str(round(var_answer, 2))
-        string_Two = "Standaarddeviatie: " + str(round(std_def, 2)) + " Kwartiel 0 T/m 4: OFF "
+                     " Median: " + str(median_answer) + " Variantie: " + str(round(var_answer, 2))
+        string_Two = "Standaarddeviatie: " + str(round(std_def, 2)) + " Kwartiel 0 T/m 4: " + \
+                     str(q0) + " " + str(q1) + " " + str(q2) + " " + str(q3) + " " + str(q4) + " IQR: " + str(iqr)
         self.label1["text"] = string_one
         self.label2["text"] = string_Two
+
+    def check_nextlist(self):
+        Startup.next_part()
+        self.gui_calculate_all()
+
+    def gui_clean_name(self):
+        self.label1["text"] = "      "
+        self.label2["text"] = "      "
+        Startup.reset_part()
 
 
 class FrameFive(Frame):
@@ -245,19 +294,17 @@ class FrameFive(Frame):
 
 
 
-
-
 class FramesixTree(Frame):
     def __init__(self, parrent, master):
         Frame.__init__(self, parrent)
         master.create_background_logos(self)
         f6_label = Label(self, text="Search Tree", bg="#99A3A4", borderwidth=5, relief=RIDGE, font=master.font_type)
         f6_label.pack(pady=80, padx=10, side=TOP)
-        f2_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: master.next_frame(FrameOne), borderwidth=5,
+        f2_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: [master.next_frame(FrameOne), Startup.reset_part()], borderwidth=5,
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
         f2_button1.bind("<Return>", lambda event: master.next_frame(FrameOne))
         f2_button1.pack(pady=10, padx=10, side=BOTTOM)
-        f2_button2 = Button(self, text="Show", bg="#99A3A4", borderwidth=5, command=lambda: self.wraper(),
+        f2_button2 = Button(self, text="Load tree", bg="#99A3A4", borderwidth=5, command=lambda: self.wraper(),
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
         f2_button2.bind("<Return>", lambda event: self.wraper())
         f2_button2.pack(pady=4, padx=4)
@@ -272,7 +319,7 @@ class FramesevenTI(Frame):
         master.create_background_logos(self)
         f7_label = Label(self, text="TI in project", bg="#99A3A4", borderwidth=5, relief=RIDGE, font=master.font_type)
         f7_label.pack(pady=80, padx=10, side=TOP)
-        f2_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: master.next_frame(FrameOne), borderwidth=5,
+        f2_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: [master.next_frame(FrameOne), Startup.reset_part()], borderwidth=5,
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
         f2_button1.bind("<Return>", lambda event: master.next_frame(FrameOne))
         f2_button1.pack(pady=10, padx=10, side=BOTTOM)
