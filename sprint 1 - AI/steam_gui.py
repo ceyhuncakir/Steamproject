@@ -216,15 +216,10 @@ class FrameFour(Frame):
         f3_button3.bind("<Return>", lambda event: self.check_nextlist())
         f3_button3.pack(pady=5, padx=5, side=BOTTOM)
 
-        # Nog niet af
         self.f3_figure = Figure(figsize=(5, 5), dpi=100)
         self.canvas = FigureCanvasTkAgg(self.f3_figure, self)
         self.canvas.get_tk_widget().pack(side=TOP, expand=True)
         self.plot = self.f3_figure.gca()
-
-        # list_show = calc_statistiek.get_relevante_data(sort_func.basic_insertion('price'), 17)
-        # prep_list = list_show[1:]
-        # self.plot.hist(prep_list, bins=20)
 
 
     def gui_calculate_all(self):
@@ -242,17 +237,11 @@ class FrameFour(Frame):
                      str(q0) + " " + str(q1) + " " + str(q2) + " " + str(q3) + " " + str(q4) + " IQR: " + str(iqr)
         self.label1["text"] = string_one
         self.label2["text"] = string_Two
-
-        # Nog niet af
         list_show = calc_statistiek.get_relevante_data(sort_func.basic_insertion('price'), 17)
         prep_list = list_show[1:]
-        self.plot.hist(prep_list, bins=20)
-        # self.plot.show()
-
-
-
-
-
+        self.plot.clear()
+        self.plot.hist(prep_list, bins=10)
+        self.canvas.draw()
 
     def check_nextlist(self):
         Startup.next_part()
