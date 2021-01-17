@@ -93,18 +93,6 @@ class SortingAlgorithms:
             sorted_steam[index], sorted_steam[min_index] = sorted_steam[min_index], sorted_steam[index]
         return sorted_steam
 
-    def quicksort(self, cath):
-        print("start quicksort")
-        sort_on_data = self.steam_cath[0].index(cath)
-        # data = self.steam2.copy()
-        # print(Startup.part_index)
-        # print(Startup.part_list)
-        data = Startup.part_list[Startup.part_index]
-        return_data = sort_func.QuickSort_process(data, sort_on_data)
-        return return_data
-        # print(return_data[0])
-        # print(return_data[1])
-        # print(len(return_data))
 
     def QuickSort_process(self, arr, sort_on):
 
@@ -378,9 +366,9 @@ calc_statistiek = Statistiek(Startup.steam_cath)
 search_b = search_binaire()
 # search_b.binary_search(sort_func.basic_sort('price'), 5, 17)
 
-sort_func.quicksort("price")
-Startup.next_part()
-sort_func.quicksort("price")
+# sort_func.QuickSort_process(17)
+# Startup.next_part()
+# sort_func.QuickSort_process(17)
 
 
 def fill_tree(tree, num_elems=20000000, max_int=10000000): # functie voor het vullen van de tree # moet later de waardes van de lijst binnen dit functie zetten.

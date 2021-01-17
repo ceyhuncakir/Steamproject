@@ -156,7 +156,9 @@ class FrameThree(Frame):
         elif index == 1:
             self.sorted_list = sort_func.basic_selection(search)
         elif index == 2:
-            self.sorted_list = sort_func.quicksort(search)
+            sort_on_data = Startup.steam_cath[0].index(search)
+            data = Startup.part_list[Startup.part_index]
+            self.sorted_list = sort_func.QuickSort_process(data, sort_on_data)
         self.gui_sort(search)
 
 
@@ -235,12 +237,14 @@ class FrameFour(Frame):
                      " Median: " + str(median_answer) + " Variantie: " + str(round(var_answer, 2))
         string_Two = "Standaarddeviatie: " + str(round(std_def, 2)) + " Kwartiel 0 T/m 4: " + \
                      str(q0) + " " + str(q1) + " " + str(q2) + " " + str(q3) + " " + str(q4) + " IQR: " + str(iqr)
+        string_zero = "List: " + str(Startup.part_index)
         self.label1["text"] = string_one
         self.label2["text"] = string_Two
-        list_show = calc_statistiek.get_relevante_data(sort_func.basic_insertion('price'), 17)
+        list_show = calc_statistiek.get_relevante_data(sort_func.basic_insertion(calc), index)
         prep_list = list_show[1:]
         self.plot.clear()
         self.plot.hist(prep_list, bins=10)
+        self.plot.set_title(string_zero)
         self.canvas.draw()
 
     def check_nextlist(self):
