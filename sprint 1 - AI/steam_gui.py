@@ -322,22 +322,28 @@ class FramesixTree(Frame):
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
         f6_button2.bind("<Return>", lambda event: self.load_tree())
         f6_button2.pack(pady=4, padx=4)
-        self.f4_textbox = Text(self)
-        self.f4_textbox.pack(pady=4, padx=4, side=TOP, fill=Y, expand=YES)
-        f6_button3 = Button(self, text="Load tree", bg="#99A3A4", borderwidth=5, command=lambda: self.load_next_tree(),
+        self.f6_textbox = Text(self)
+        self.f6_textbox.pack(pady=4, padx=4, side=TOP, fill=Y, expand=YES)
+        f6_button3 = Button(self, text="Next tree", bg="#99A3A4", borderwidth=5, command=lambda: self.load_next_tree(),
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
         f6_button3.bind("<Return>", lambda event: self.load_next_tree())
         f6_button3.pack(pady=4, padx=4)
 
     def load_tree(self):
         fill_tree(tree)
-        tree.print_tree()
+        print(tree.return_tree())
         return
 
     def load_next_tree(self):
         Startup.next_part()
         fill_tree(tree)
         tree.print_tree()
+
+    def gui_insert_text(self, item):
+        self.f6_textbox.config(state=NORMAL)
+        self.f6_textbox.delete('1.0', END)
+        self.f6_textbox.insert(END, item)
+        self.f6_textbox.config(state=DISABLED)
 
 
 class FramesevenTI(Frame):
@@ -350,13 +356,43 @@ class FramesevenTI(Frame):
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
         f7_button1.bind("<Return>", lambda event: master.next_frame(FrameOne))
         f7_button1.pack(pady=10, padx=10, side=BOTTOM)
-        f7_button2 = Button(self, text="Show", bg="#99A3A4", borderwidth=5, command=lambda: self.wraper(),
+        f7_button2 = Button(self, text="Show1", bg="#99A3A4", borderwidth=5, command=lambda: self.show1(),
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
-        f7_button2.bind("<Return>", lambda event: self.wraper())
+        f7_button2.bind("<Return>", lambda event: self.show1())
         f7_button2.pack(pady=4, padx=4)
+        f7_button3 = Button(self, text="Show2", bg="#99A3A4", borderwidth=5, command=lambda: self.show2(),
+                            relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
+        f7_button3.bind("<Return>", lambda event: self.show2())
+        f7_button3.pack(pady=4, padx=4)
+        f7_button4 = Button(self, text="Show3", bg="#99A3A4", borderwidth=5, command=lambda: self.show3(),
+                            relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
+        f7_button4.bind("<Return>", lambda event: self.show3())
+        f7_button4.pack(pady=4, padx=4)
+        f7_button5 = Button(self, text="Show4", bg="#99A3A4", borderwidth=5, command=lambda: self.show4(),
+                            relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
+        f7_button5.bind("<Return>", lambda event: self.show4())
+        f7_button5.pack(pady=4, padx=4)
+        f7_button6 = Button(self, text="Show5", bg="#99A3A4", borderwidth=5, command=lambda: self.show5(),
+                            relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
+        f7_button6.bind("<Return>", lambda event: self.show5())
+        f7_button6.pack(pady=4, padx=4)
 
-    def wraper(self):
+
+    def show1(self):
         return
+
+    def show2(self):
+        return
+
+    def show3(self):
+        return
+
+    def show4(self):
+        return
+
+    def show5(self):
+        return
+
 
 
 def resize_image(item, n_width, n_height, num):

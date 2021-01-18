@@ -220,143 +220,156 @@ class search_binaire:
 
 
 class node:
-	def __init__(self, value=None):
-		self.value = value # houd de value van de node in de tree
-		self.left_child = None # houd de left child van de node in de tree
-		self.right_child = None # houd de right child van de node in de tree
-		self.parent = None # houd de parent van de node in de tree
+    def __init__(self, value=None):
+        self.value = value # houd de value van de node in de tree
+        self.left_child = None # houd de left child van de node in de tree
+        self.right_child = None # houd de right child van de node in de tree
+        self.parent = None # houd de parent van de node in de tree
 
 class binary_search_tree:
-	def __init__(self):
-		self.root = None
+    def __init__(self):
+        self.root = None
+        self.node_value = []
 
-	def insert(self, value): # main functie voor het invoegen van een node in de tree
-		if self.root == None:
-			self.root = node(value) # hier word de node gerest naar een nieuwe node met de vorige waarde
-		else:
-			self._insert(value, self.root)
+    def insert(self, value): # main functie voor het invoegen van een node in de tree
+        if self.root == None:
+            self.root = node(value) # hier word de node gerest naar een nieuwe node met de vorige waarde
+        else:
+            self._insert(value, self.root)
 
-	def _insert(self, value, cur_node): # private functie voor het invoegen van een node in de tree
-		if value < cur_node.value:
-			if cur_node.left_child == None:
-				cur_node.left_child = node(value)
-				cur_node.left_child.parent = cur_node
-			else:
-				self._insert(value, cur_node.left_child)
-		elif value > cur_node.value:
-			if cur_node.right_child == None:
-				cur_node.right_child = node(value)
-				cur_node.right_child.parent = cur_node
-			else:
-				self._insert(value, cur_node.right_child)
-		else:
-			print("De waarde zit al in de tree")
+    def _insert(self, value, cur_node): # private functie voor het invoegen van een node in de tree
+        if value < cur_node.value:
+            if cur_node.left_child == None:
+                cur_node.left_child = node(value)
+                cur_node.left_child.parent = cur_node
+            else:
+                self._insert(value, cur_node.left_child)
+        elif value > cur_node.value:
+            if cur_node.right_child == None:
+                cur_node.right_child = node(value)
+                cur_node.right_child.parent = cur_node
+            else:
+                self._insert(value, cur_node.right_child)
+        else:
+            print("De waarde zit al in de tree")
 
-	def print_tree(self): # main functie voor het printen van het tree
-		if self.root != None:
-			self._print_tree(self.root)
+    def print_tree(self): # main functie voor het printen van het tree
+        if self.root != None:
+            self._print_tree(self.root)
 
-	def _print_tree(self, cur_node): # private functie voor het printen van het tree
-		if cur_node!=None:
-			self._print_tree(cur_node.left_child)
-			print (str(cur_node.value))
-			self._print_tree(cur_node.right_child)
+    def _print_tree(self, cur_node): # private functie voor het printen van het tree
+        if cur_node!=None:
+            self._print_tree(cur_node.left_child)
+            print (str(cur_node.value))
+            self._print_tree(cur_node.right_child)
 
-	def height(self): # main functie voor het zoeken van het hoogte van de boom
-		if self.root != None:
-			return self._height(self.root,0)
-		else:
-			return 0
+    def height(self): # main functie voor het zoeken van het hoogte van de boom
+        if self.root != None:
+            return self._height(self.root,0)
+        else:
+            return 0
 
-	def _height(self, cur_node, cur_height): # private functie voor het zoeken van het hoogte van de boom
-		if cur_node == None: return cur_height
-		left_height = self._height(cur_node.left_child, cur_height + 1)
-		right_height = self._height(cur_node.right_child, cur_height + 1)
-		return max(left_height, right_height)
+    def _height(self, cur_node, cur_height): # private functie voor het zoeken van het hoogte van de boom
+        if cur_node == None: return cur_height
+        left_height = self._height(cur_node.left_child, cur_height + 1)
+        right_height = self._height(cur_node.right_child, cur_height + 1)
+        return max(left_height, right_height)
 
-	def find(self, value): # main functie voor het zoeken van een node
-		if self.root != None:
-			return self._find(value, self.root)
-		else:
-			return None
+    def find(self, value): # main functie voor het zoeken van een node
+        if self.root != None:
+            return self._find(value, self.root)
+        else:
+            return None
 
-	def _find(self, value, cur_node): # private funcite voor het zoeken van een node
-		if value == cur_node.value:
-			return cur_node
-		elif value < cur_node.value and cur_node.left_child != None:
-			return self._find(value, cur_node.left_child)
-		elif value > cur_node.value and cur_node.right_child != None:
-			return self._find(value, cur_node.right_child)
+    def _find(self, value, cur_node): # private funcite voor het zoeken van een node
+        if value == cur_node.value:
+            return cur_node
+        elif value < cur_node.value and cur_node.left_child != None:
+            return self._find(value, cur_node.left_child)
+        elif value > cur_node.value and cur_node.right_child != None:
+            return self._find(value, cur_node.right_child)
 
-	def delete_value(self, value): # functie voor het verwijderen van de waarde in de tree
-		return self.delete_node(self.find(value))
+    def delete_value(self, value): # functie voor het verwijderen van de waarde in de tree
+        return self.delete_node(self.find(value))
 
-	def delete_node(self,node): # functie voor het verwijderen van een node in de tree
+    def delete_node(self,node): # functie voor het verwijderen van een node in de tree
 
-		if node == None or self.find(node.value) == None:
-			print("De node die deleted moet worden is niet gevonden!")
-			return None
-		def min_value_node(n):
-			current=n
-			while current.left_child != None:
-				current=current.left_child
-			return current
+        if node == None or self.find(node.value) == None:
+            print("De node die deleted moet worden is niet gevonden!")
+            return None
+        def min_value_node(n):
+            current=n
+            while current.left_child != None:
+                current=current.left_child
+            return current
 
-		def num_children(n):
-			num_children=0
-			if n.left_child != None: num_children += 1
-			if n.right_child != None: num_children += 1
-			return num_children
+        def num_children(n):
+            num_children=0
+            if n.left_child != None: num_children += 1
+            if n.right_child != None: num_children += 1
+            return num_children
 
-		node_parent = node.parent
+        node_parent = node.parent
 
-		node_children = num_children(node)
+        node_children = num_children(node)
 
-		if node_children == 0:
-			if node_parent != None:
-				if node_parent.left_child == node:
-					node_parent.left_child = None
-				else:
-					node_parent.right_child = None
-			else:
-				self.root=None
+        if node_children == 0:
+            if node_parent != None:
+                if node_parent.left_child == node:
+                    node_parent.left_child = None
+                else:
+                    node_parent.right_child = None
+            else:
+                self.root=None
 
-		if node_children == 1:
-			if node.left_child!=None:
-				child = node.left_child
-			else:
-				child = node.right_child
+        if node_children == 1:
+            if node.left_child!=None:
+                child = node.left_child
+            else:
+                child = node.right_child
 
-			if node_parent != None:
-				if node_parent.left_child==node:
-					node_parent.left_child=child
-				else:
-					node_parent.right_child=child
-			else:
-				self.root=child
-			child.parent=node_parent
+            if node_parent != None:
+                if node_parent.left_child==node:
+                    node_parent.left_child=child
+                else:
+                    node_parent.right_child=child
+            else:
+                self.root=child
+            child.parent=node_parent
 
 
-		if node_children == 2:
-			successor = min_value_node(node.right_child)
-			node.value = successor.value
-			self.delete_node(successor)
+        if node_children == 2:
+            successor = min_value_node(node.right_child)
+            node.value = successor.value
+            self.delete_node(successor)
 
-	def search(self, value): # main functie voor het zoeken van het node in de tree
-		if self.root != None:
-			return self._search(value, self.root)
-		else:
-			return False
+    def search(self, value): # main functie voor het zoeken van het node in de tree
+        if self.root != None:
+            return self._search(value, self.root)
+        else:
+            return False
 
-	def _search(self, value, cur_node): # private functie voor het zoeken van het node in de tree
-		if value == cur_node.value:
-			return True
-		elif value < cur_node.value and cur_node.left_child != None:
-			return self._search(value, cur_node.left_child)
-		elif value > cur_node.value and cur_node.right_child != None:
-			return self._search(value, cur_node.right_child)
-		return False
+    def _search(self, value, cur_node): # private functie voor het zoeken van het node in de tree
+        if value == cur_node.value:
+            return True
+        elif value < cur_node.value and cur_node.left_child != None:
+            return self._search(value, cur_node.left_child)
+        elif value > cur_node.value and cur_node.right_child != None:
+            return self._search(value, cur_node.right_child)
+        return False
 
+    def return_tree(self):
+        self.node_value = []
+        if self.root != None:
+            self._return_tree(self.root)
+
+    def _return_tree(self, cur_node):
+        if cur_node != None:
+            self._return_tree(cur_node.left_child)
+            self.node_value.append(str(cur_node.value))
+            self._return_tree(cur_node.right_child)
+        print('here', self.node_value)
+        return self.node_value
 
 
 
@@ -377,13 +390,19 @@ def fill_tree(tree): # functie voor het vullen van de tree # moet later de waard
     list = calc_statistiek.get_relevante_data(Startup.part_list[Startup.part_index], 0)
     list = list[1:]
     for i in list:
+        # print(i)
         tree.insert(i)
     return tree
 
 tree = binary_search_tree() # initialiseert de tree
 # tree = fill_tree(tree) # vult automatisch de tree
 #tree.insert(9) # kunnen handmatig de tree vullen met values
-tree.print_tree() # print de hele tree met de hoogte van de tree
+# tree.print_tree() # print de hele tree met de hoogte van de tree
+# Startup.next_part()
+# fill_tree(tree)
+#
+# Startup.next_part()
+# fill_tree(tree)
 #print(tree.search(10)) # kunnen op een bepaalde value kijken of de value in de tree bestaat zoja geeft het een true statement terug zo niet dan een false statement
 
 # print("boom hoogte: " + str(tree.height()))
