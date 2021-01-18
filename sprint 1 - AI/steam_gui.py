@@ -237,7 +237,7 @@ class FrameFour(Frame):
                      " Median: " + str(median_answer) + " Variantie: " + str(round(var_answer, 2))
         string_Two = "Standaarddeviatie: " + str(round(std_def, 2)) + " Kwartiel 0 T/m 4: " + \
                      str(q0) + " " + str(q1) + " " + str(q2) + " " + str(q3) + " " + str(q4) + " IQR: " + str(iqr)
-        string_zero = "List: " + str(Startup.part_index)
+        string_zero = "List: " + str(Startup.part_index + 1)
         self.label1["text"] = string_one
         self.label2["text"] = string_Two
         list_show = calc_statistiek.get_relevante_data(sort_func.basic_insertion(calc), index)
@@ -313,18 +313,31 @@ class FramesixTree(Frame):
         Frame.__init__(self, parrent)
         master.create_background_logos(self)
         f6_label = Label(self, text="Search Tree", bg="#99A3A4", borderwidth=5, relief=RIDGE, font=master.font_type)
-        f6_label.pack(pady=80, padx=10, side=TOP)
-        f2_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: [master.next_frame(FrameOne), Startup.reset_part()], borderwidth=5,
+        f6_label.pack(pady=20, padx=10, side=TOP)
+        f6_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: [master.next_frame(FrameOne), Startup.reset_part()], borderwidth=5,
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
-        f2_button1.bind("<Return>", lambda event: master.next_frame(FrameOne))
-        f2_button1.pack(pady=10, padx=10, side=BOTTOM)
-        f2_button2 = Button(self, text="Load tree", bg="#99A3A4", borderwidth=5, command=lambda: self.wraper(),
+        f6_button1.bind("<Return>", lambda event: master.next_frame(FrameOne))
+        f6_button1.pack(pady=10, padx=10, side=BOTTOM)
+        f6_button2 = Button(self, text="Load tree", bg="#99A3A4", borderwidth=5, command=lambda: self.load_tree(),
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
-        f2_button2.bind("<Return>", lambda event: self.wraper())
-        f2_button2.pack(pady=4, padx=4)
+        f6_button2.bind("<Return>", lambda event: self.load_tree())
+        f6_button2.pack(pady=4, padx=4)
+        self.f4_textbox = Text(self)
+        self.f4_textbox.pack(pady=4, padx=4, side=TOP, fill=Y, expand=YES)
+        f6_button3 = Button(self, text="Load tree", bg="#99A3A4", borderwidth=5, command=lambda: self.load_next_tree(),
+                            relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
+        f6_button3.bind("<Return>", lambda event: self.load_next_tree())
+        f6_button3.pack(pady=4, padx=4)
 
-    def wraper(self):
+    def load_tree(self):
+        fill_tree(tree)
+        tree.print_tree()
         return
+
+    def load_next_tree(self):
+        Startup.next_part()
+        fill_tree(tree)
+        tree.print_tree()
 
 
 class FramesevenTI(Frame):
@@ -333,14 +346,14 @@ class FramesevenTI(Frame):
         master.create_background_logos(self)
         f7_label = Label(self, text="TI in project", bg="#99A3A4", borderwidth=5, relief=RIDGE, font=master.font_type)
         f7_label.pack(pady=80, padx=10, side=TOP)
-        f2_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: [master.next_frame(FrameOne), Startup.reset_part()], borderwidth=5,
+        f7_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: [master.next_frame(FrameOne), Startup.reset_part()], borderwidth=5,
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
-        f2_button1.bind("<Return>", lambda event: master.next_frame(FrameOne))
-        f2_button1.pack(pady=10, padx=10, side=BOTTOM)
-        f2_button2 = Button(self, text="Show", bg="#99A3A4", borderwidth=5, command=lambda: self.wraper(),
+        f7_button1.bind("<Return>", lambda event: master.next_frame(FrameOne))
+        f7_button1.pack(pady=10, padx=10, side=BOTTOM)
+        f7_button2 = Button(self, text="Show", bg="#99A3A4", borderwidth=5, command=lambda: self.wraper(),
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
-        f2_button2.bind("<Return>", lambda event: self.wraper())
-        f2_button2.pack(pady=4, padx=4)
+        f7_button2.bind("<Return>", lambda event: self.wraper())
+        f7_button2.pack(pady=4, padx=4)
 
     def wraper(self):
         return
