@@ -71,30 +71,30 @@ class SortingAlgorithms:
         # sorted_steam = self.steam2.copy()
         sorted_steam = Startup.part_list[Startup.part_index]
 
-        for index in range(1, (len(sorted_steam))):
-            copy_list = sorted_steam[index]
-            index_grens = index
-            while sorted_steam[index_grens][sort_on] < sorted_steam[index_grens - 1][sort_on] and index_grens > 0:
+        for index in range(1, (len(sorted_steam))): #traversed van 1 tot het lengte van het list met tuples
+            copy_list = sorted_steam[index] #gesorteerd lijst met index aangegeven
+            index_grens = index # variable voor het grens van het index
+            while sorted_steam[index_grens][sort_on] < sorted_steam[index_grens - 1][sort_on] and index_grens > 0: #kijkt op de index grens waar het gesorteerd moet worden op de gesorteerd lijst dat word bekeken of het kleiner is dan de gesorteerd lijst met een index grens value van - 1 en er word gtekeken of index grens groter is dan 0
                 sorted_steam[index_grens] = sorted_steam[index_grens - 1]
                 sorted_steam[index_grens - 1] = copy_list
-                index_grens -= 1
+                index_grens -= 1 # hier word de grens met 1 elke keer vermindert
         return sorted_steam
 
     def basic_selection(self, cath):
-        sort_on = self.steam_cath[0].index(cath)
+        sort_on = self.steam_cath[0].index(cath) # variable voor het categorie
         # sorted_steam = self.steam2.copy()
-        sorted_steam = Startup.part_list[Startup.part_index]
+        sorted_steam = Startup.part_list[Startup.part_index] # variable voor het data van het categorie
         print("start basic selection sort")
         for index in range(0, len(sorted_steam) - 1):
             min_index = index
             for index_two in range(index+1, len(sorted_steam) - 1):
-                if sorted_steam[min_index][sort_on] > sorted_steam[index_two][sort_on]:
+                if sorted_steam[min_index][sort_on] > sorted_steam[index_two][sort_on]: # kijkt of de minimale grens waar het gesorteerd moet worden op de gesorteerd lijst of het groter is dan de gesorteerd lijst van het index_Two zo ja defineren dat min index gelijkwaardig staat aan index_two
                     min_index = index_two
             sorted_steam[index], sorted_steam[min_index] = sorted_steam[min_index], sorted_steam[index]
         return sorted_steam
 
 
-    def QuickSort_process(self, arr, sort_on):
+    def QuickSort_process(self, arr, sort_on): # quicksort process
 
         elements = len(arr)
 
@@ -102,7 +102,7 @@ class SortingAlgorithms:
         if elements < 2:
             return arr
 
-        current_position = 0  # Position of the partitioning element
+        current_position = 0  # Positie van het scheidingselement
 
         for i in range(1, elements):  # Partitioning loop
             if arr[i][sort_on] <= arr[0][sort_on]:
@@ -113,13 +113,13 @@ class SortingAlgorithms:
 
         temp = arr[0]
         arr[0] = arr[current_position]
-        arr[current_position] = temp  # Brings pivot to it's appropriate position
+        arr[current_position] = temp # Brengt het pivot naar de juiste positie
 
-        left = sort_func.QuickSort_process(arr[0:current_position], sort_on)  # Sorts the elements to the left of pivot
+        left = sort_func.QuickSort_process(arr[0:current_position], sort_on)  # Sorteert de elementen links van het pivot
         right = sort_func.QuickSort_process(arr[current_position + 1:elements],
-                                            sort_on)  # sorts the elements to the right of pivot
+                                            sort_on)  # sorteert de elementen rechts van het pivot
 
-        arr = left + [arr[current_position]] + right  # Merging everything together
+        arr = left + [arr[current_position]] + right  # hier word alles samegevoerd
 
         # print(arr)
         return arr
