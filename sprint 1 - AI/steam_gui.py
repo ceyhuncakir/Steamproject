@@ -24,6 +24,8 @@ class SteamGui:
         self.frame_holder.pack(fill=BOTH, expand=YES)
         self.frame_holder.grid_rowconfigure(0, weight=1)
         self.frame_holder.grid_columnconfigure(0, weight=1)
+
+
         self.catagorie_list = []
         for categorie in Startup.steam_cath[0]:
             self.catagorie_list.append(categorie)
@@ -33,6 +35,14 @@ class SteamGui:
             self.all_frames[frame] = this_frame
             this_frame.grid(row=0, column=0, sticky="nsew")
         self.next_frame(FrameOne)
+
+    def next_part(self):
+        Startup.part_index += 1
+        if Startup.part_index > (len(Startup.part_list) - 1):
+            Startup.part_index = 0
+
+    def reset_part(self):
+        Startup.part_index = 0
 
     def next_frame(self, next_frame):
         frame = self.all_frames[next_frame]
@@ -92,6 +102,7 @@ class FrameTwo(Frame):
     def __init__(self, parrent, master):
         Frame.__init__(self, parrent)
         master.create_background_logos(self)
+        # self.master = master
         label = Label(self, text="Game name", bg="#99A3A4", borderwidth=5, relief=RIDGE, font=master.font_type)
         label.pack(pady=80, padx=10)
         self.label1 = Label(self, text="      ", bg="#99A3A4", borderwidth=5, relief=RIDGE, font=master.font_type)
@@ -115,7 +126,7 @@ class FrameTwo(Frame):
     def gui_clean_name(self):
         self.label1["text"] = "      "
         self.f2_button2.config(text="Show game")
-        Startup.reset_part()
+        steam_gui.reset_part()
 
 
 class FrameThree(Frame):
@@ -123,6 +134,7 @@ class FrameThree(Frame):
         Frame.__init__(self, parrent)
         master.create_background_logos(self)
         self.sorted_list = []
+        # self.master = master
         label = Label(self, text="Sorting games", bg="#99A3A4", borderwidth=5, relief=RIDGE, font=master.font_type)
         label.pack(pady=20, padx=10, side=TOP)
         self.sorting_method = ["Insertion Sort", "Selection Sort", "Quiq Sort"]
@@ -136,7 +148,7 @@ class FrameThree(Frame):
         f3_button2.pack(pady=4, padx=4, side=TOP)
         self.f3_textbox = Text(self)
         self.f3_textbox.pack(pady=4, padx=4, side=TOP, fill=Y, expand=YES)
-        f3_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: [master.next_frame(FrameOne), Startup.reset_part(),
+        f3_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: [master.next_frame(FrameOne), steam_gui.reset_part(),
                                                                               self.gui_insert_text(" ")], borderwidth=5, relief=RIDGE,
                             font=master.font_type, activebackground='#99A3A4')
         f3_button1.bind("<Return>", lambda event: master.next_frame(FrameOne))
@@ -180,7 +192,7 @@ class FrameThree(Frame):
 
 
     def check_nextlist(self):
-        Startup.next_part()
+        steam_gui.next_part()
         self.get_sort_method()
 
 
@@ -248,13 +260,13 @@ class FrameFour(Frame):
         self.canvas.draw()
 
     def check_nextlist(self):
-        Startup.next_part()
+        steam_gui.next_part()
         self.gui_calculate_all()
 
     def gui_clean_name(self):
         self.label1["text"] = "      "
         self.label2["text"] = "      "
-        Startup.reset_part()
+        steam_gui.reset_part()
 
 
 class FrameFive(Frame):
@@ -263,7 +275,7 @@ class FrameFive(Frame):
         master.create_background_logos(self)
         f5_label = Label(self, text="Game prijsen lijst", bg="#99A3A4", borderwidth=5, relief=RIDGE, font=master.font_type)
         f5_label.pack(pady=10, padx=10, side=TOP)
-        f5_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: [master.next_frame(FrameOne), Startup.reset_part()], borderwidth=5,
+        f5_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: [master.next_frame(FrameOne), steam_gui.reset_part()], borderwidth=5,
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
         f5_button1.bind("<Return>", lambda event: master.next_frame(FrameOne))
         f5_button1.pack(pady=5, padx=5, side=BOTTOM)
@@ -297,7 +309,7 @@ class FrameFive(Frame):
         self.gui_insert_text(insert_text)
 
     def check_nextlist(self):
-        Startup.next_part()
+        steam_gui.next_part()
         self.check_input()
 
     def gui_insert_text(self, item):
@@ -314,7 +326,7 @@ class FramesixTree(Frame):
         master.create_background_logos(self)
         f6_label = Label(self, text="Search Tree", bg="#99A3A4", borderwidth=5, relief=RIDGE, font=master.font_type)
         f6_label.pack(pady=20, padx=10, side=TOP)
-        f6_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: [master.next_frame(FrameOne), Startup.reset_part()], borderwidth=5,
+        f6_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: [master.next_frame(FrameOne), steam_gui.reset_part()], borderwidth=5,
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
         f6_button1.bind("<Return>", lambda event: master.next_frame(FrameOne))
         f6_button1.pack(pady=10, padx=10, side=BOTTOM)
@@ -337,7 +349,7 @@ class FramesixTree(Frame):
 
     def load_next_tree(self):
         tree.delete_root()
-        Startup.next_part()
+        steam_gui.next_part()
         self.load_tree()
 
     def set_list_data(self, list):
@@ -363,7 +375,7 @@ class FramesevenTI(Frame):
         master.create_background_logos(self)
         f7_label = Label(self, text="TI in project", bg="#99A3A4", borderwidth=5, relief=RIDGE, font=master.font_type)
         f7_label.pack(pady=80, padx=10, side=TOP)
-        f7_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: [master.next_frame(FrameOne), Startup.reset_part()], borderwidth=5,
+        f7_button1 = Button(self, text="Back", bg="#99A3A4", command=lambda: [master.next_frame(FrameOne), steam_gui.reset_part()], borderwidth=5,
                             relief=RIDGE, font=master.font_type, activebackground='#99A3A4')
         f7_button1.bind("<Return>", lambda event: master.next_frame(FrameOne))
         f7_button1.pack(pady=10, padx=10, side=BOTTOM)

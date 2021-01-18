@@ -16,15 +16,6 @@ class StartupApiTi:
             self.part_list.append(self.steam2[i:i + self.max_size])
             # part_list = [[(), (), ()...700], [(), (), ()...700], [(), (), ()...700],......]
 
-    def next_part(self):
-        # Verplaats/verwerk in gui
-        self.part_index += 1
-        if self.part_index > (len(self.part_list) - 1):
-            self.part_index = 0
-
-    def reset_part(self):
-        # Verplaats/verwerk in gui
-        self.part_index = 0
 
     def inladen(self):
         with open('./Data/steam.json', 'r') as steamdata:
@@ -48,7 +39,6 @@ class StartupApiTi:
         print(self.steam2[0])
         # steam2 =  [(10, 'Counter-Strike', '2000-11-01', ... ), (20, 'Team Fortress Classic', '1999-04-01',... ), ...]
 
-
     def give_name(self):
         my_json_file = open('./data/steam.json', 'r')
         jsondata = my_json_file.read()
@@ -63,7 +53,6 @@ class StartupApiTi:
 class SortingAlgorithms:
     def __init__(self, list_2):
         self.steam_cath = list_2
-
 
     def basic_insertion(self, cath):
         print("start basic insertion sort")
