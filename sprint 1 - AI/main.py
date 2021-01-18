@@ -226,6 +226,7 @@ class node:
         self.right_child = None # houd de right child van de node in de tree
         self.parent = None # houd de parent van de node in de tree
 
+
 class binary_search_tree:
     def __init__(self):
         self.root = None
@@ -250,8 +251,8 @@ class binary_search_tree:
                 cur_node.right_child.parent = cur_node
             else:
                 self._insert(value, cur_node.right_child)
-        else:
-            print("De waarde zit al in de tree")
+
+
 
     def print_tree(self): # main functie voor het printen van het tree
         if self.root != None:
@@ -368,9 +369,15 @@ class binary_search_tree:
             self._return_tree(cur_node.left_child)
             self.node_value.append(str(cur_node.value))
             self._return_tree(cur_node.right_child)
-        print('here', self.node_value)
-        return self.node_value
 
+    def delete_root(self):
+        if self.root != None:
+            self._delete_root(self.root)
+
+    def _delete_root(self, root):
+        self.root = None
+        root.left = None
+        root.right = None
 
 
 Startup = StartupApiTi()
@@ -400,7 +407,9 @@ tree = binary_search_tree() # initialiseert de tree
 # tree.print_tree() # print de hele tree met de hoogte van de tree
 # Startup.next_part()
 # fill_tree(tree)
-#
+
+
+
 # Startup.next_part()
 # fill_tree(tree)
 #print(tree.search(10)) # kunnen op een bepaalde value kijken of de value in de tree bestaat zoja geeft het een true statement terug zo niet dan een false statement

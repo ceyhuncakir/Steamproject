@@ -331,13 +331,24 @@ class FramesixTree(Frame):
 
     def load_tree(self):
         fill_tree(tree)
-        print(tree.return_tree())
-        return
+        tree.return_tree()
+        values = tree.node_value
+        self.set_list_data(values)
 
     def load_next_tree(self):
+        tree.delete_root()
         Startup.next_part()
-        fill_tree(tree)
-        tree.print_tree()
+        self.load_tree()
+
+    def set_list_data(self, list):
+        insert_text = "Search tree list: " + str(Startup.part_index + 1) + '\n'
+        insert_text += "Tree Hight: " + str(tree.height()) + '\n'
+        for index in range(0, (len(list) - 1)):
+            num = index + 1
+            node = list[index]
+            insert_text += str(num) + ' Node: ' + str(node) + '\n'
+        self.gui_insert_text(insert_text)
+
 
     def gui_insert_text(self, item):
         self.f6_textbox.config(state=NORMAL)
