@@ -237,49 +237,49 @@ class node:
 
 class binary_search_tree:
     def __init__(self):
-        self.root = None
-        self.node_value = []
+        self.root = None # hier zeggen wordt er gezegt dat de root van de tree none is op het moment
+        self.node_value = [] # hier creeren we een lijst waar de node values er in gaan zitten
 
     # Sprint Ai optioneel
     def insert(self, value): # main functie voor het invoegen van een node in de tree
-        if self.root == None:
-            self.root = node(value) # hier word de node gerest naar een nieuwe node met de vorige waarde
-        else:
-            self._insert(value, self.root)
+        if self.root == None: # hier word er gekeken of root gelijkwaardig staat aan none
+            self.root = node(value) # hier word gezegt dat root, node is met de value binnen in het node
+        else: # anders
+            self._insert(value, self.root) # word de functie _insert gebruikt met de waarde value en parameter root mee gegeven
 
     # Sprint Ai optioneel
     def _insert(self, value, cur_node): # private functie voor het invoegen van een node in de tree
-        if value < cur_node.value:
-            if cur_node.left_child == None:
-                cur_node.left_child = node(value)
-                cur_node.left_child.parent = cur_node
-            else:
-                self._insert(value, cur_node.left_child)
-        elif value > cur_node.value:
-            if cur_node.right_child == None:
-                cur_node.right_child = node(value)
-                cur_node.right_child.parent = cur_node
-            else:
+        if value < cur_node.value: # hier word gekeken of de value die inserted moet worden kleiner is dan de current node value
+            if cur_node.left_child == None: # ook hier word gekeken of de current node value van de linker node child leeg is
+                cur_node.left_child = node(value) # hier zeggen we dat de current node value gevult moet worden met de value binnen in het node
+                cur_node.left_child.parent = cur_node # hier worde er gezegt dat de current left child parent gevuld moet worden met de current node
+            else: # anders
+                self._insert(value, cur_node.left_child) # hier word de functie _insert gebruikt met de gegeven waarde die aangepast word in de current node van het left child
+        elif value > cur_node.value: # of anders als value groter is dan current node value
+            if cur_node.right_child == None: # hier wordt er gekeken of de right child van de current node leeg is
+                cur_node.right_child = node(value) # hier word de right child van de current node ingevult met de node value
+                cur_node.right_child.parent = cur_node # hier word de parent van de current node die bij het right child hoort ingevult met de current node
+            else: # anders
                 self._insert(value, cur_node.right_child)
 
     # Sprint Ai optioneel
     def print_tree(self): # main functie voor het printen van het tree
-        if self.root != None:
-            self._print_tree(self.root)
+        if self.root != None: # hier word er gekeken of root gelijkwaardig staat aan none
+            self._print_tree(self.root) # we roepen de private print tree functie op
 
     # Sprint Ai optioneel
     def _print_tree(self, cur_node): # private functie voor het printen van het tree
-        if cur_node!=None:
-            self._print_tree(cur_node.left_child)
-            print (str(cur_node.value))
-            self._print_tree(cur_node.right_child)
+        if cur_node!=None: # we kijken of de current node niet gelijkwaardig staat aan none
+            self._print_tree(cur_node.left_child) # hier word er gekeken en vergelijkingen gemaakt van het left child
+            print (str(cur_node.value)) # we printen de current node value
+            self._print_tree(cur_node.right_child) # hier word er gekeken en vergelijkingen gemaakt van het right child
 
     # Sprint Ai optioneel
     def height(self): # main functie voor het zoeken van het hoogte van de boom
-        if self.root != None:
+        if self.root != None: # hier word er gekeken of root gelijkwaardig staat aan none
             return self._height(self.root,0)
-        else:
-            return 0
+        else: # anders
+            return 0 # hier returnen we 0
 
     # Sprint Ai optioneel
     def _height(self, cur_node, cur_height): # private functie voor het zoeken van het hoogte van de boom
@@ -290,19 +290,19 @@ class binary_search_tree:
 
     # Sprint Ai optioneel
     def find(self, value): # main functie voor het zoeken van een node
-        if self.root != None:
+        if self.root != None: # hier word er gekeken of root gelijkwaardig staat aan none
             return self._find(value, self.root)
-        else:
-            return None
+        else: # anders
+            return None # we returnen niks
 
     # Sprint Ai optioneel
     def _find(self, value, cur_node): # private funcite voor het zoeken van een node
-        if value == cur_node.value:
-            return cur_node
-        elif value < cur_node.value and cur_node.left_child != None:
-            return self._find(value, cur_node.left_child)
-        elif value > cur_node.value and cur_node.right_child != None:
-            return self._find(value, cur_node.right_child)
+        if value == cur_node.value: # we kijken of value gelijkwaardig staat aan current node value
+            return cur_node # als het waar is dan returne de current node value
+        elif value < cur_node.value and cur_node.left_child != None: # hier word er gechecked value kleiner is dan de current node value en dat de left child van de current node niet gelijkwaardig staat aan none
+            return self._find(value, cur_node.left_child) # hier returnen we left child van de current node met de value
+        elif value > cur_node.value and cur_node.right_child != None: # hier word er gechecked value groter is dan de current node value en dat de right child van de current node niet gelijkwaardig staat aan none
+            return self._find(value, cur_node.right_child) # hier returnen we right child van de current node met de value
 
     # Sprint Ai optioneel
     def delete_value(self, value): # functie voor het verwijderen van de waarde in de tree
@@ -311,95 +311,95 @@ class binary_search_tree:
     # Sprint Ai optioneel
     def delete_node(self,node): # functie voor het verwijderen van een node in de tree
 
-        if node == None or self.find(node.value) == None:
+        if node == None or self.find(node.value) == None: # we checken of node gelijkwaardig staat aan none of dat de functie met daarin de node value gelijkwaardig staat aan none
             print("De node die deleted moet worden is niet gevonden!")
-            return None
+            return None # we returnen none
         def min_value_node(n):
             current=n
-            while current.left_child != None:
-                current=current.left_child
-            return current
+            while current.left_child != None: # terwijl de current left child niet gelijkwaardig staat aan none
+                current=current.left_child # we defineren dat current current left child
+            return current # returned de current
 
         def num_children(n):
-            num_children=0
-            if n.left_child != None: num_children += 1
-            if n.right_child != None: num_children += 1
-            return num_children
+            num_children=0 # we defineren dat num children 0 is
+            if n.left_child != None: num_children += 1 # current left children node is niet gelijkwaardig aan none dan doen we er + 1 boven op de num children
+            if n.right_child != None: num_children += 1 # current right children node is niet gelijkwaardig aan none dan doen we er + 1 boven op de num children
+            return num_children # returned num children
 
         node_parent = node.parent
 
         node_children = num_children(node)
 
-        if node_children == 0:
-            if node_parent != None:
-                if node_parent.left_child == node:
-                    node_parent.left_child = None
-                else:
-                    node_parent.right_child = None
-            else:
-                self.root=None
+        if node_children == 0: # checkt of de node children gelijkwaardig staan aan 0
+            if node_parent != None: # check of de node parent niet gelijkwaardig staat aan none
+                if node_parent.left_child == node: # node parent
+                    node_parent.left_child = None # hier defineren we dat de left child van het node parent none is
+                else: # anders
+                    node_parent.right_child = None # hier defineren we dat de right child van het node parent none is
+            else: # anders
+                self.root=None # defineren we dat root none is
 
-        if node_children == 1:
-            if node.left_child!=None:
-                child = node.left_child
-            else:
-                child = node.right_child
+        if node_children == 1: # hier kijken we of node childeren gelijkwaardig staat aan 1
+            if node.left_child!=None: # hier word er gekeken of de left child van het node niet gelijkwaardig staat aan none
+                child = node.left_child # hier defineren we dat child left child is
+            else: # anders
+                child = node.right_child # hier defineren we dat child right child is
 
-            if node_parent != None:
-                if node_parent.left_child==node:
-                    node_parent.left_child=child
-                else:
-                    node_parent.right_child=child
-            else:
-                self.root=child
-            child.parent=node_parent
+            if node_parent != None: # hier word er gekeken of de node parent niet gelijkwaardig staat aan none
+                if node_parent.left_child == node: # hier kijken we of de node parent gelijkwaardig staat aan node
+                    node_parent.left_child = child # hier defineren we dat left child van de node parent de child is
+                else: # anders
+                    node_parent.right_child = child #  hier defineren we dat right child van de node parent de child is
+            else: # anders
+                self.root=child # hier defineren we dat root child is
+            child.parent=node_parent #hier defineren we dat child parent node parent is
 
 
-        if node_children == 2:
-            successor = min_value_node(node.right_child)
-            node.value = successor.value
-            self.delete_node(successor)
+        if node_children == 2: # hier wordt er gekeken of de node childeren gelijkwaardig staat aan 2
+            successor = min_value_node(node.right_child) # hier defineren we dat successor minimale value van node is van het rechter child
+            node.value = successor.value # hier defineren we dat node value successor value is
+            self.delete_node(successor) # hier gebruiken we de delete_note function waar we de variable successor door geven
 
     # Sprint Ai optioneel
     def search(self, value): # main functie voor het zoeken van het node in de tree
-        if self.root != None:
-            return self._search(value, self.root)
-        else:
-            return False
+        if self.root != None: # hier word er gekeken of root gelijkwaardig staat aan none
+            return self._search(value, self.root) # hier returnen we de value met het root waarde
+        else: # anders
+            return False # return false
 
     # Sprint Ai optioneel
     def _search(self, value, cur_node): # private functie voor het zoeken van het node in de tree
-        if value == cur_node.value:
-            return True
-        elif value < cur_node.value and cur_node.left_child != None:
-            return self._search(value, cur_node.left_child)
-        elif value > cur_node.value and cur_node.right_child != None:
-            return self._search(value, cur_node.right_child)
-        return False
+        if value == cur_node.value: # hier word er gekeken of de value gelijkwaardig staat aan de current node value
+            return True # hier returnen we True
+        elif value < cur_node.value and cur_node.left_child != None: # hier wordt er gekeken of value kleiner is dan de current node value en of de left child van het current node niet gelijkwaardig staat aan none
+            return self._search(value, cur_node.left_child) # hier returnen we de value van de current node left child
+        elif value > cur_node.value and cur_node.right_child != None: # hier wordt er gekeken of value groter is dan de current node value en of de right child van het current node niet gelijkwaardig staat aan none
+            return self._search(value, cur_node.right_child) # hier returnen we de value van de current node left child
+        return False # hier word de boolean false terug gegeven
 
     # Sprint Ai optioneel
     def return_tree(self):
         self.node_value = []
-        if self.root != None:
-            self._return_tree(self.root)
+        if self.root != None: # hier word er gekeken of root niet gelijkwaardig staat aan none
+            self._return_tree(self.root) # hier word de private return tree functie opgeroepen
 
     # Sprint Ai optioneel
     def _return_tree(self, cur_node):
-        if cur_node != None:
-            self._return_tree(cur_node.left_child)
-            self.node_value.append(str(cur_node.value))
-            self._return_tree(cur_node.right_child)
+        if cur_node != None: # hier word er gekeken of current node niet gelijkwaardig staat aan none
+            self._return_tree(cur_node.left_child) # hier returnen we de current node van het left child ookewel het wordt opnieuw vergeleken recursion
+            self.node_value.append(str(cur_node.value)) # hier appenden we de current node value aan de lijst an node_value
+            self._return_tree(cur_node.right_child) # hier returnen we de current node van het right child ookewel het wordt opnieuw vergeleken recursion
 
     # Sprint Ai optioneel
     def delete_root(self):
-        if self.root != None:
-            self._delete_root(self.root)
+        if self.root != None: # hier word er gekeken of root niet gelijkwaardig staat aan none
+            self._delete_root(self.root) # hier word de functie _delete_root opgeroepen met de waarde van root zelf.
 
     # Sprint Ai optioneel
     def _delete_root(self, root):
-        self.root = None
-        root.left = None
-        root.right = None
+        self.root = None # hier zeggen we dat root none moet zijn
+        root.left = None # hier zeggen we dat de left branch van het root none moet zijn
+        root.right = None # hier zeggen we dat de right branch van het root none moet zijn
 
 
 Startup = StartupApiTi()
