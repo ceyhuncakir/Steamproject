@@ -344,7 +344,7 @@ class FramesixTree(Frame):
         f6_button3.pack(pady=4, padx=4)
 
     def load_tree(self):
-        fill_tree(tree)
+        Startup.fill_tree(tree)
         tree.return_tree()
         values = tree.node_value
         self.set_list_data(values)

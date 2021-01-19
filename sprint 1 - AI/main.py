@@ -3,15 +3,21 @@ from random import randint
 
 class StartupApiTi:
     def __init__(self):
+        # Steam 2 en steam_cath is de data van het bron bestand.
+        # steam2 =  [(10, 'Counter-Strike', '2000-11-01', ... ), (20, 'Team Fortress Classic', '1999-04-01',... ), ...]
+        # steam_cath = [('appid', 'name', 'release_date', ... )]
         self.steam2 = []
         self.steam_cath = []
+        # Counter is voor het bij houden van index van de naam functie
         self.counter = 0
+        # Part_list is de bron data verdeelt over een x aantal lijsten
         self.part_list = []
-        self.max_size = 987  # limit Gui = 5000, limit recursion = 987.
+        # limit Gui = 5000, limit recursion = 987.
+        self.max_size = 987
         self.part_index = 0
 
     def split_list(self):
-        # De data is te groot en wordt hier gesplit.
+        # De data is te groot voor recursion en wordt hier gesplit.
         for i in range(0, len(self.steam2), self.max_size):
             self.part_list.append(self.steam2[i:i + self.max_size])
             # part_list = [[(), (), ()...700], [(), (), ()...700], [(), (), ()...700],......]
@@ -22,6 +28,7 @@ class StartupApiTi:
             data = json.load(steamdata)
             # Categorien worden apart opgeslagen
             temp = []
+            # Voor elke key in tuple 0 haal de catagorien naamen op
             for cath in data[0].keys():
                 temp.append(cath)
             self.steam_cath.append(tuple(temp))
@@ -34,20 +41,27 @@ class StartupApiTi:
                     temp_tuple = temp_tuple + tem
                 self.steam2.append(temp_tuple)
                 load_counter += 1
-        print(self.steam_cath)
-        # steam_cath = [('appid', 'name', 'release_date', ... )]
-        print(self.steam2[0])
-        # steam2 =  [(10, 'Counter-Strike', '2000-11-01', ... ), (20, 'Team Fortress Classic', '1999-04-01',... ), ...]
 
     def give_name(self):
+        # De functie leest het brond bestand
         my_json_file = open("./data/steam.json", 'r')
         jsondata = my_json_file.read()
         obj = json.loads(jsondata)
         item = str(obj[self.counter]["name"])
         self.counter += 1
+        # Counter om bij te houden waar de functie in de lijst is
         if self.counter > (len(obj) - 1):
             self.counter = 0
         return item
+
+    # functie voor het vullen van de tree
+    def fill_tree(self,tree):
+        list = calc_statistiek.get_relevante_data(Startup.part_list[Startup.part_index], 0)
+        list = list[1:]
+        for i in list:
+            # print(i)
+            tree.insert(i)
+        return tree
 
 
 class SortingAlgorithms:
@@ -110,7 +124,6 @@ class SortingAlgorithms:
 
         arr = left + [arr[current_position]] + right  # hier word alles samegevoerd
 
-        # print(arr)
         return arr
 
 
@@ -131,14 +144,12 @@ class Statistiek:
         for index in range(1, len(relevant_list)):  # Van af 1 vanwege tag
             amount += relevant_list[index]
         gemidelde = amount / (len(relevant_list) - 1)
-        # print(int(gemidelde), "gemiddelt aantal", relevant_list[0])
         return gemidelde
 
     def rnge(self, relevant_list):
         high = max(relevant_list[1:])
         low = min(relevant_list[1:])
         range_uitkomst = high - low
-        # print(int(range_uitkomst), "range van", relevant_list[0])
         return range_uitkomst
 
     def median(self, relevant_list):
@@ -148,7 +159,6 @@ class Statistiek:
             mediaan = ((relevant_list[midden_punt] + relevant_list[midden_punt - 1]) / 2)
         else:
             mediaan = relevant_list[midden_punt + 1]  # Tag
-        # print(mediaan, "median")
         return mediaan
 
     def variantie(self, relevant_list):
@@ -158,13 +168,11 @@ class Statistiek:
             afwijking = relevant_list[index] - var_gemidelde
             resultaat += afwijking * afwijking
         var = resultaat / len(relevant_list)
-        # print(int(var), "variantie van", relevant_list[0])
         return var
 
     def standaard_def(self, relevant_list):
         var_list = self.variantie(relevant_list)
         antwoord = var_list ** (1 / 2)
-        # print(int(antwoord), "standaarddeviatie van", relevant_list[0])
         return antwoord
 
     def kwartiel_gen(self, relevant_list):
@@ -178,7 +186,6 @@ class Statistiek:
             kwartiel_drie = self.median(relevant_list[middenpunt:])
         kwartiel_vier = relevant_list[-1]
         iqr = kwartiel_drie - kwartiel_een
-        # print('Kwartiel 0 t/m 4 en iqr', kwartiel_null, kwartiel_een, kwartiel_twee, kwartiel_drie, kwartiel_vier, iqr)
         return kwartiel_null, kwartiel_een, kwartiel_twee, kwartiel_drie, kwartiel_vier, iqr
 
 
@@ -199,8 +206,11 @@ class search_binaire:
             return search_b.binary_search(list_al[:midden_punt], target, cath)
 
     def get_all(self, list_al, target, cath):
+        # Binary search geeft een lijst met de voorkomende cijfer.
+        # Hier worden de niet passende cijvers er uit gehaalt.
         low_num = 0
         high_num = len(list_al) - 1
+        # Int om de getallen rond het gegeven getal terug te geven.
         while int(list_al[low_num][cath]) < target:
             low_num += 1
         while int(list_al[high_num][cath]) > target:
@@ -375,42 +385,9 @@ Startup.split_list()
 sort_func = SortingAlgorithms(Startup.steam_cath)
 calc_statistiek = Statistiek(Startup.steam_cath)
 search_b = search_binaire()
-# search_b.binary_search(sort_func.basic_sort('price'), 5, 17)
-
-# sort_func.QuickSort_process(17)
-# Startup.next_part()
-# sort_func.QuickSort_process(17)
-
-
-def fill_tree(tree): # functie voor het vullen van de tree # moet later de waardes van de lijst binnen dit functie zetten.
-    list = calc_statistiek.get_relevante_data(Startup.part_list[Startup.part_index], 0)
-    list = list[1:]
-    for i in list:
-        # print(i)
-        tree.insert(i)
-    return tree
-
-tree = binary_search_tree() # initialiseert de tree
-# tree = fill_tree(tree) # vult automatisch de tree
-#tree.insert(9) # kunnen handmatig de tree vullen met values
-# tree.print_tree() # print de hele tree met de hoogte van de tree
-# Startup.next_part()
-# fill_tree(tree)
+tree = binary_search_tree()
 
 
 
-# Startup.next_part()
-# fill_tree(tree)
-#print(tree.search(10)) # kunnen op een bepaalde value kijken of de value in de tree bestaat zoja geeft het een true statement terug zo niet dan een false statement
-
-# print("boom hoogte: " + str(tree.height()))
-
-# Testing uikomst
-# calc_statistiek.gemiddelde(calc_statistiek.get_relevante_data(calc_statistiek.steam2, 17))
-# calc_statistiek.rnge(calc_statistiek.get_relevante_data(calc_statistiek.steam2, 17))
-# calc_statistiek.median(calc_statistiek.get_relevante_data(sort_func.basic_sort('price'), 17))
-# calc_statistiek.variantie(calc_statistiek.get_relevante_data(calc_statistiek.steam2, 17))
-# calc_statistiek.standaard_def(calc_statistiek.get_relevante_data(calc_statistiek.steam2, 17))
-# calc_statistiek.kwartiel_gen(calc_statistiek.get_relevante_data(sort_func.basic_sort('price'), 17))
 
 
