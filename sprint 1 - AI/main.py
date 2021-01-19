@@ -22,7 +22,7 @@ class StartupApiTi:
             self.part_list.append(self.steam2[i:i + self.max_size])
             # part_list = [[(), (), ()...700], [(), (), ()...700], [(), (), ()...700],......]
 
-
+    # Sprint 1 
     def inladen(self):
         with open("./Data/steam.json", 'r') as steamdata:
             data = json.load(steamdata)
@@ -42,6 +42,7 @@ class StartupApiTi:
                 self.steam2.append(temp_tuple)
                 load_counter += 1
 
+    # Sprint 1
     def give_name(self):
         # De functie leest het brond bestand
         my_json_file = open("./data/steam.json", 'r')
@@ -55,6 +56,7 @@ class StartupApiTi:
         return item
 
     # functie voor het vullen van de tree
+    # Sprint Ai optioneel
     def fill_tree(self,tree):
         list = calc_statistiek.get_relevante_data(Startup.part_list[Startup.part_index], 0)
         list = list[1:]
@@ -68,6 +70,7 @@ class SortingAlgorithms:
     def __init__(self, list_2):
         self.steam_cath = list_2
 
+    # Sprint 2
     def basic_insertion(self, cath):
         print("start basic insertion sort")
         sort_on = self.steam_cath[0].index(cath)
@@ -83,6 +86,7 @@ class SortingAlgorithms:
                 index_grens -= 1 # hier word de grens met 1 elke keer vermindert
         return sorted_steam
 
+    # Sprint 2
     def basic_selection(self, cath):
         sort_on = self.steam_cath[0].index(cath) # variable voor het categorie
         # sorted_steam = self.steam2.copy()
@@ -96,7 +100,7 @@ class SortingAlgorithms:
             sorted_steam[index], sorted_steam[min_index] = sorted_steam[min_index], sorted_steam[index]
         return sorted_steam
 
-
+    # Sprint Ai optioneel
     def QuickSort_process(self, arr, sort_on): # quicksort process
 
         elements = len(arr)
@@ -131,6 +135,7 @@ class Statistiek:
     def __init__(self, list_2):
         self.steam_cath = list_2
 
+    # Sprint 2
     def get_relevante_data(self, given_list, index_location):
         # Zorgt dat alle relevante data bij elkaar wordt gehaald.
         relevante_list = [self.steam_cath[0][index_location]]
@@ -138,20 +143,20 @@ class Statistiek:
             relevante_list.append(item[index_location])
         # Voorbeeld: ['price', 7.19, 3.99, 3.99, 3.99,]
         return relevante_list
-
+    # Sprint 2
     def gemiddelde(self, relevant_list):
         amount = 0
         for index in range(1, len(relevant_list)):  # Van af 1 vanwege tag
             amount += relevant_list[index]
         gemidelde = amount / (len(relevant_list) - 1)
         return gemidelde
-
+    # Sprint 2
     def rnge(self, relevant_list):
         high = max(relevant_list[1:])
         low = min(relevant_list[1:])
         range_uitkomst = high - low
         return range_uitkomst
-
+    # Sprint 2
     def median(self, relevant_list):
         lenght_list = (len(relevant_list) - 1)  # -1 vanwege de tag
         midden_punt = lenght_list // 2
@@ -160,7 +165,7 @@ class Statistiek:
         else:
             mediaan = relevant_list[midden_punt + 1]  # Tag
         return mediaan
-
+    # Sprint 2
     def variantie(self, relevant_list):
         var_gemidelde = self.gemiddelde(relevant_list)
         resultaat = 0
@@ -170,11 +175,13 @@ class Statistiek:
         var = resultaat / len(relevant_list)
         return var
 
+    # Sprint 2
     def standaard_def(self, relevant_list):
         var_list = self.variantie(relevant_list)
         antwoord = var_list ** (1 / 2)
         return antwoord
 
+    # Sprint 2
     def kwartiel_gen(self, relevant_list):
         kwartiel_null = relevant_list[1]  # Een tag in de lijst van daar niet 0
         middenpunt = (len(relevant_list) - 1) // 2
@@ -193,6 +200,7 @@ class search_binaire:
     def __init__(self):
         self.steam_cath = []
 
+    # Sprint Ai optioneel
     def binary_search(self, list_al, target, cath):
         midden_punt = (len(list_al) - 1) // 2
         # Binary search met Int om de verschilende games rond het gegeven getal te geven.
@@ -205,6 +213,7 @@ class search_binaire:
         if int(list_al[midden_punt][cath]) > target:
             return search_b.binary_search(list_al[:midden_punt], target, cath)
 
+    # Sprint Ai optioneel
     def get_all(self, list_al, target, cath):
         # Binary search geeft een lijst met de voorkomende cijfer.
         # Hier worden de niet passende cijvers er uit gehaalt.
@@ -231,12 +240,14 @@ class binary_search_tree:
         self.root = None
         self.node_value = []
 
+    # Sprint Ai optioneel
     def insert(self, value): # main functie voor het invoegen van een node in de tree
         if self.root == None:
             self.root = node(value) # hier word de node gerest naar een nieuwe node met de vorige waarde
         else:
             self._insert(value, self.root)
 
+    # Sprint Ai optioneel
     def _insert(self, value, cur_node): # private functie voor het invoegen van een node in de tree
         if value < cur_node.value:
             if cur_node.left_child == None:
@@ -251,36 +262,40 @@ class binary_search_tree:
             else:
                 self._insert(value, cur_node.right_child)
 
-
-
+    # Sprint Ai optioneel
     def print_tree(self): # main functie voor het printen van het tree
         if self.root != None:
             self._print_tree(self.root)
 
+    # Sprint Ai optioneel
     def _print_tree(self, cur_node): # private functie voor het printen van het tree
         if cur_node!=None:
             self._print_tree(cur_node.left_child)
             print (str(cur_node.value))
             self._print_tree(cur_node.right_child)
 
+    # Sprint Ai optioneel
     def height(self): # main functie voor het zoeken van het hoogte van de boom
         if self.root != None:
             return self._height(self.root,0)
         else:
             return 0
 
+    # Sprint Ai optioneel
     def _height(self, cur_node, cur_height): # private functie voor het zoeken van het hoogte van de boom
         if cur_node == None: return cur_height
         left_height = self._height(cur_node.left_child, cur_height + 1)
         right_height = self._height(cur_node.right_child, cur_height + 1)
         return max(left_height, right_height)
 
+    # Sprint Ai optioneel
     def find(self, value): # main functie voor het zoeken van een node
         if self.root != None:
             return self._find(value, self.root)
         else:
             return None
 
+    # Sprint Ai optioneel
     def _find(self, value, cur_node): # private funcite voor het zoeken van een node
         if value == cur_node.value:
             return cur_node
@@ -289,9 +304,11 @@ class binary_search_tree:
         elif value > cur_node.value and cur_node.right_child != None:
             return self._find(value, cur_node.right_child)
 
+    # Sprint Ai optioneel
     def delete_value(self, value): # functie voor het verwijderen van de waarde in de tree
         return self.delete_node(self.find(value))
 
+    # Sprint Ai optioneel
     def delete_node(self,node): # functie voor het verwijderen van een node in de tree
 
         if node == None or self.find(node.value) == None:
@@ -343,12 +360,14 @@ class binary_search_tree:
             node.value = successor.value
             self.delete_node(successor)
 
+    # Sprint Ai optioneel
     def search(self, value): # main functie voor het zoeken van het node in de tree
         if self.root != None:
             return self._search(value, self.root)
         else:
             return False
 
+    # Sprint Ai optioneel
     def _search(self, value, cur_node): # private functie voor het zoeken van het node in de tree
         if value == cur_node.value:
             return True
@@ -358,21 +377,25 @@ class binary_search_tree:
             return self._search(value, cur_node.right_child)
         return False
 
+    # Sprint Ai optioneel
     def return_tree(self):
         self.node_value = []
         if self.root != None:
             self._return_tree(self.root)
 
+    # Sprint Ai optioneel
     def _return_tree(self, cur_node):
         if cur_node != None:
             self._return_tree(cur_node.left_child)
             self.node_value.append(str(cur_node.value))
             self._return_tree(cur_node.right_child)
 
+    # Sprint Ai optioneel
     def delete_root(self):
         if self.root != None:
             self._delete_root(self.root)
 
+    # Sprint Ai optioneel
     def _delete_root(self, root):
         self.root = None
         root.left = None
