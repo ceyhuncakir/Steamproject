@@ -154,13 +154,7 @@ class TiContainer:
 
 ti_class = TiContainer()
 ti_class.fullcontrol([0, 0, 0, 0, 0, 0, 0, 0])
-
 ti_class.neoupdate()
 
-ti_class.button.when_pressed = ti_class.buttonpressed()
+ti_class.button.when_pressed = ti_class.buttonpressed
 ti_class.button.when_released = ti_class.buttonlose
-
-
-
-
-#  pause()

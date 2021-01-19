@@ -404,11 +404,11 @@ class FramesevenTI(Frame):
 
 
     def show1(self):
-        thread_1 = threading.Thread(target=gp.ti_class.fullcontrol())
+        thread_1 = threading.Thread(target=gp.ti_class.led(4,"on"))
 
 
     def show2(self):
-        thread_2 = threading.Thread(target=gp.ti_class.led())
+        thread_2 = threading.Thread(target=gp.ti_class.led(3,"on"))
 
 
     def show3(self):
