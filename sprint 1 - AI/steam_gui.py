@@ -19,7 +19,7 @@ class SteamGui:
     def __init__(self, parent):
         self.parent = parent
         self.font_type = font.Font(family='Verdana', size=12)
-        self.parent.iconbitmap('./img/steam-logo.ico')
+       # self.parent.iconbitmap("./img/steam-logo.ico")
         self.parent.title("Steam gedrag inzicht")
         self.parent.geometry("%dx%d+0+0" % (width, height))
         self.frame_holder = Frame(root, bg='#483D8B', borderwidth=5, relief=RIDGE)

@@ -18,7 +18,7 @@ class StartupApiTi:
 
 
     def inladen(self):
-        with open('./Data/steam.json', 'r') as steamdata:
+        with open("./Data/steam.json", 'r') as steamdata:
             data = json.load(steamdata)
             # Categorien worden apart opgeslagen
             temp = []
@@ -40,7 +40,7 @@ class StartupApiTi:
         # steam2 =  [(10, 'Counter-Strike', '2000-11-01', ... ), (20, 'Team Fortress Classic', '1999-04-01',... ), ...]
 
     def give_name(self):
-        my_json_file = open('./data/steam.json', 'r')
+        my_json_file = open("./data/steam.json", 'r')
         jsondata = my_json_file.read()
         obj = json.loads(jsondata)
         item = str(obj[self.counter]["name"])
