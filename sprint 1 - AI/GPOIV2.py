@@ -1,7 +1,7 @@
 import time
 from gpiozero import LED, Button
 from signal import pause
-import threading
+
 
 # Importent funcions to use: led(position, onoroff) and RGBledupdate(pos, r, *args), servo() en afstandsensor() [geeft cm terug]
 # voor de knop pas buttonpressed() en buttonlose() aan
@@ -155,10 +155,11 @@ class TiContainer:
 ti_class = TiContainer()
 ti_class.fullcontrol([0, 0, 0, 0, 0, 0, 0, 0])
 
-#   neoupdate()   ???
+ti_class.neoupdate()
 
 ti_class.button.when_pressed = ti_class.buttonpressed()
 ti_class.button.when_released = ti_class.buttonlose
+
 
 
 

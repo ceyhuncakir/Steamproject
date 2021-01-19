@@ -5,6 +5,8 @@ import tkinter.font as font
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
+import threading
+import GPOIV2 as gp
 
 # Dit is de 4e prototype (Work in process).
 # Feedback of ideen zijn altijd welkome!
@@ -402,19 +404,24 @@ class FramesevenTI(Frame):
 
 
     def show1(self):
-        return
+        thread_1 = threading.Thread(target=gp.ti_class.fullcontrol())
+
 
     def show2(self):
-        return
+        thread_2 = threading.Thread(target=gp.ti_class.led())
+
 
     def show3(self):
-        return
+        thread_3 = threading.Thread(target=gp.ti_class.binaerisplitter())
+
 
     def show4(self):
-        return
+        thread_4 = threading.Thread(target=gp.ti_class.servo())
+
 
     def show5(self):
-        return
+        thread_5 = threading.Thread(target=gp.ti_class.afstandsensor())
+
 
 
 
