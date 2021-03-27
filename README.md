@@ -4,13 +4,13 @@
 Project B 
 Readme
 
-Beschrijving doel van Project:
-De hoofdopdracht voor dit project is als volgt : Maak een Grafische weergave die inzicht geeft op het gedrag van uw vrienden op het gaming platform steam. Hierbij moeten een aantal inzichten naar voren komen zoals, welke spellen spelen zij het meest en welke games spelen zij allemaal. Dit inzicht moet worden ondersteund van een netwerk dat gebruik maakt van een rasberry PI.
+Description goal of Project:
+The main assignment for this project is as follows: Create a Graphical representation that provides insight into the behavior of your friends on the steam gaming platform. A number of insights must emerge, such as, which games do they play the most and which games do they all play. This understanding must be supported by a network using a rasberry PI.
 
-Instructies GUI
-Open het programma, u kunt nu kiezen een naam te laten zien. Als u dit doet word er extra iformatie weergegeven.
+GUI instructions
+Open the program, you can now choose to show a name. Doing this will display additional information.
 
-Project Leden:
+Project Members:
 Kenny van de Berg :	 student nummer: 1777503  	
 : Email: kenny.vandenberg@student.hu.nl
 Joris van Santen      :	 student nummer  1791872 	
@@ -23,6 +23,6 @@ Jelle de Jong             :	 student nummer  1769565
 : Email: jelle.j.dejong@student.hu.nl 
 
 
-Versie 0.0.1
-16-11-2020
+Version 0.0.2
+27-3-2021
 
